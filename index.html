@@ -199,7 +199,134 @@ button{cursor:pointer}
   .contenu h3{font-size:1rem}
   .ajouter{padding:10px 8px;font-size:.86rem}
 }
-@media (prefers-reduced-motion:no-preference){.ecrin{transition:transform .2s ease,box-shadow .2s ease}.ecrin:hover{transform:translateY(-2px);box-shadow:0 12px 26px -18px rgba(96,11,9,.45)}}
+/* ---------- Modernisation : profondeur, reflets dorés, animations légères ---------- */
+:root{--ease:cubic-bezier(.22,1,.36,1);--ease-ressort:cubic-bezier(.34,1.56,.64,1);--ombre-1:0 1px 2px rgba(61,6,5,.05),0 4px 14px -8px rgba(61,6,5,.16);--ombre-2:0 22px 44px -24px rgba(61,6,5,.5)}
+html{scroll-behavior:smooth}
+#bijoux{scroll-margin-top:96px}
+
+/* En-tête : reflet doré qui glisse, ombre au défilement */
+.entete{transition:box-shadow .35s var(--ease)}
+.entete::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;pointer-events:none;background:linear-gradient(90deg,transparent,#FFF3D6,transparent) no-repeat;background-size:35% 100%;animation:reflet 7s var(--ease) infinite}
+.entete.defile{box-shadow:0 12px 30px -16px rgba(0,0,0,.6)}
+.logo{transition:height .35s var(--ease)}
+.entete.defile .logo{height:52px}
+@media (max-width:560px){.entete.defile .logo{height:42px}}
+.bouton-panier{transition:background-color .25s,transform .25s var(--ease)}
+.bouton-panier:active{transform:scale(.96)}
+.compteur.saute{animation:saute .55s var(--ease-ressort)}
+
+/* Ouverture : halos dorés, titre scintillant, entrée en cascade */
+.ouverture{position:relative;overflow:hidden;isolation:isolate}
+.ouverture::before,.ouverture::after{content:"";position:absolute;border-radius:50%;z-index:-1;pointer-events:none}
+.ouverture::before{width:640px;height:640px;right:-200px;top:-260px;background:radial-gradient(circle,rgba(255,190,92,.30),transparent 62%);animation:flotte 16s ease-in-out infinite alternate}
+.ouverture::after{width:520px;height:520px;left:-220px;bottom:-280px;background:radial-gradient(circle,rgba(255,150,110,.16),transparent 62%);animation:flotte 20s ease-in-out infinite alternate-reverse}
+@media (min-width:761px){.ouverture .enveloppe{padding-block:68px 76px}}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .ouverture h2{background:linear-gradient(100deg,#FFF6EA 0%,#FFF6EA 38%,var(--or) 50%,#FFF6EA 62%,#FFF6EA 100%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ouverture .enveloppe>div:first-child>h2{animation:monte .9s var(--ease) .08s both,scintille 9s linear 1.4s infinite}
+}
+.ouverture .enveloppe>div:first-child>*{animation:monte .9s var(--ease) both}
+.ouverture .enveloppe>div:first-child>:nth-child(2){animation-delay:.08s}
+.ouverture .enveloppe>div:first-child>:nth-child(3){animation-delay:.16s}
+.ouverture .enveloppe>div:first-child>:nth-child(4){animation-delay:.24s}
+.ouverture .enveloppe>div:first-child>:nth-child(5){animation-delay:.32s}
+.atouts li{background:rgba(255,190,92,.06);backdrop-filter:blur(4px)}
+.visuel-accueil{animation:apparait 1.2s var(--ease) .2s both}
+.visuel-accueil svg{animation:levite 7s ease-in-out infinite}
+.visuel-accueil svg *{stroke-dasharray:420;stroke-dashoffset:420;animation:trace 2.6s var(--ease) forwards}
+.visuel-accueil svg :nth-child(2){animation-delay:.25s}
+.visuel-accueil svg :nth-child(3){animation-delay:.5s}
+.visuel-accueil svg :nth-child(4),.visuel-accueil svg :nth-child(5){animation-delay:.7s}
+.visuel-accueil svg :nth-child(n+6){animation-delay:1s}
+.visuel-accueil img{box-shadow:0 34px 60px -30px rgba(0,0,0,.7);animation:levite 8s ease-in-out infinite}
+.appels{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:999px;padding:12px 22px;font-weight:700;font-size:.96rem;text-decoration:none;transition:transform .3s var(--ease),box-shadow .3s var(--ease),background-color .25s,border-color .25s}
+.cta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cta.or{background:var(--or);color:var(--marque-fonce);box-shadow:0 12px 26px -14px rgba(255,190,92,.9)}
+.cta.or:hover{transform:translateY(-2px);box-shadow:0 18px 32px -14px rgba(255,190,92,1)}
+.cta.contour{border:1px solid rgba(255,246,234,.45);color:#FFF6EA}
+.cta.contour:hover{border-color:var(--or);background:rgba(255,190,92,.1)}
+.cta:active{transform:scale(.97)}
+
+/* Comment commander */
+.etapes{background:var(--surface);border-bottom:1px solid var(--line)}
+.etapes ol{list-style:none;margin:0;padding:20px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:e}
+.etapes li{display:flex;gap:12px;align-items:center;font-size:.9rem;color:var(--muted);counter-increment:e;min-width:0}
+.etapes li::before{content:counter(e);flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:1.1rem;color:var(--marque);border:1px solid rgba(154,106,28,.5);background:radial-gradient(circle at 35% 30%,#fff,var(--or-doux))}
+.etapes strong{display:block;color:var(--ink);font-weight:600;font-size:.95rem}
+@media (max-width:720px){.etapes ol{grid-template-columns:1fr;gap:12px;padding:16px 0}}
+
+/* Titres et filtres */
+.titre-section h2::after{content:"";display:block;width:56px;height:2px;margin-top:10px;background:linear-gradient(90deg,var(--or-texte),var(--or),transparent)}
+.filtre{transition:background-color .25s,color .25s,border-color .25s,transform .2s var(--ease)}
+.filtre:active{transform:scale(.95)}
+.filtre[aria-pressed="true"]{box-shadow:0 8px 18px -10px rgba(96,11,9,.7)}
+@media (max-width:720px){
+  .filtres{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-snap-type:x proximity;scroll-padding-inline:16px}
+  .filtres::-webkit-scrollbar{display:none}
+  .filtre{flex:none;scroll-snap-align:start}
+}
+
+/* Écrins : relief, zoom doux et reflet au survol */
+.ecrin{box-shadow:var(--ombre-1);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .3s}
+.visuel{overflow:hidden}
+.visuel img,.visuel svg{transition:transform .8s var(--ease)}
+.visuel::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);transform:translateX(-130%)}
+.pastille,.stock{z-index:2}
+.pastille{background:rgba(255,255,255,.86);backdrop-filter:blur(6px)}
+.prix{font-family:var(--display);font-weight:400;font-size:1.22rem;letter-spacing:.01em}
+.ajouter{transition:background-color .25s,transform .2s var(--ease)}
+.ajouter:active:not(:disabled){transform:scale(.96)}
+.ajouter.fait,.ajouter.fait:hover{background:var(--ok)}
+.lien-wa{transition:color .2s}
+.lien-wa:hover{color:var(--marque)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .ecrin:hover,.js-anim .ecrin.pret:hover{transform:translateY(-6px);box-shadow:var(--ombre-2);border-color:rgba(154,106,28,.45)}
+  .ecrin:hover .visuel img{transform:scale(1.06)}
+  .ecrin:hover .visuel svg{transform:scale(1.1) rotate(-4deg)}
+  .ecrin:hover .visuel::after{transform:translateX(130%);transition:transform 1s var(--ease)}
+}
+.js-anim .ecrin{opacity:0}
+.js-anim .ecrin.vu{animation:monte .75s var(--ease) var(--d,0s) both}
+.js-anim .ecrin.pret{opacity:1;animation:none}
+
+/* Contact, panier, toast */
+.contact{position:relative;overflow:hidden;isolation:isolate}
+.contact::before{content:"";position:absolute;z-index:-1;width:560px;height:560px;right:-180px;bottom:-320px;border-radius:50%;background:radial-gradient(circle,rgba(255,190,92,.22),transparent 62%);pointer-events:none}
+.voile:not([hidden]){animation:fondu .3s ease both;backdrop-filter:blur(2px)}
+.panier:not([hidden]){animation:glisse .45s var(--ease) both}
+.gestion:not([hidden]){animation:fondu .25s ease both}
+.article{animation:monte .4s var(--ease) both}
+.btn-principal,.btn-second{transition:background-color .25s,transform .2s var(--ease)}
+.btn-principal:active,.btn-second:active{transform:scale(.98)}
+.toast{background:rgba(43,20,18,.92);backdrop-filter:blur(8px);border:1px solid rgba(255,190,92,.35);max-width:calc(100% - 32px);text-align:center}
+.toast:not([hidden]){animation:toast .45s var(--ease-ressort) both}
+
+/* Bouton WhatsApp flottant */
+.wa-flottant{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:56px;height:56px;border-radius:50%;background:#1F7A45;color:#fff;display:grid;place-items:center;box-shadow:0 14px 28px -12px rgba(0,0,0,.55);transition:transform .35s var(--ease-ressort)}
+.wa-flottant svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.wa-flottant::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #1F7A45;animation:onde 3s var(--ease) infinite}
+.wa-flottant:hover{transform:scale(1.08)}
+.wa-flottant:active{transform:scale(.94)}
+@media (max-width:720px){.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}.pied .enveloppe{padding-right:84px}}
+
+@keyframes reflet{0%{background-position:-60% 0}60%,100%{background-position:160% 0}}
+@keyframes saute{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
+@keyframes flotte{from{transform:translate(0,0)}to{transform:translate(-40px,30px)}}
+@keyframes scintille{0%{background-position:100% 0}35%,100%{background-position:0 0}}
+@keyframes monte{from{opacity:0;transform:translateY(22px)}}
+@keyframes apparait{from{opacity:0;transform:scale(.94)}}
+@keyframes levite{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes trace{to{stroke-dashoffset:0}}
+@keyframes fondu{from{opacity:0}}
+@keyframes glisse{from{transform:translateX(100%)}}
+@keyframes toast{from{opacity:0;transform:translate(-50%,18px) scale(.96)}}
+@keyframes onde{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.65);opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .visuel-accueil svg *{stroke-dashoffset:0}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "JewelryStore", "name": "Kadya Jewels", "url": "https://kadyajewels.com/", "logo": "https://kadyajewels.com/logo.png", "image": "https://kadyajewels.com/logo.png", "telephone": "+224620562771", "currenciesAccepted": "GNF", "paymentAccepted": "Orange Money, MTN Mobile Money, Espèces", "address": {"@type": "PostalAddress", "addressCountry": "GN"}, "areaServed": "GN", "sameAs": ["https://www.tiktok.com/@kadya.jewels"]}</script>
 </head>
@@ -234,13 +361,26 @@ button{cursor:pointer}
       <h2 data-r="accroche"></h2>
       <p class="texte" data-r="presentation"></p>
       <ul class="atouts" data-r="atouts"></ul>
+      <div class="appels">
+        <a class="cta or" href="#bijoux">Découvrir les bijoux <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+        <a class="cta contour" data-r="cta-wa" target="_blank" rel="noopener" hidden>Écrire sur WhatsApp</a>
+      </div>
     </div>
     <div class="visuel-accueil" data-r="visuel-accueil"></div>
   </div>
 </section>
+<section class="etapes" aria-label="Comment commander">
+  <div class="enveloppe">
+    <ol>
+      <li><span><strong>Choisissez</strong>Ajoutez vos bijoux au panier</span></li>
+      <li><span><strong>Confirmez</strong>Nous vérifions la disponibilité sur WhatsApp</span></li>
+      <li><span><strong>Recevez</strong>Livraison ou retrait, paiement simple</span></li>
+    </ol>
+  </div>
+</section>
 <div class="bandeau" data-r="bandeau" hidden><div class="enveloppe">Catalogue d'exemple : les vrais bijoux et leurs prix arrivent bientôt.</div></div>
 
-<main class="enveloppe">
+<main class="enveloppe" id="bijoux">
   <div class="titre-section"><h2>Nos bijoux</h2><span data-r="nb-bijoux"></span></div>
   <nav class="filtres" aria-label="Catégories" data-r="filtres"></nav>
   <section class="grille" data-r="grille" aria-live="polite"></section>
@@ -264,6 +404,7 @@ button{cursor:pointer}
   <div class="panier-pied" data-r="panier-pied"></div>
 </aside>
 <div class="toast" data-r="toast" hidden role="status"></div>
+<a class="wa-flottant" data-r="wa-flottant" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/><path d="M9 10h6M9 13.5h4"/></svg></a>
 
 <div class="gestion" data-r="gestion" hidden role="dialog" aria-modal="true" aria-labelledby="titre-gestion">
   <div class="enveloppe">
@@ -407,6 +548,19 @@ button{cursor:pointer}
   var app = document.getElementById("app");
   app.appendChild(document.getElementById("gabarit").content.cloneNode(true));
   function $(r){ return app.querySelector('[data-r="' + r + '"]'); }
+  var ANIM = "IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  if (ANIM) app.classList.add("js-anim");
+  var observateur = ANIM ? new IntersectionObserver(function(entrees){
+    entrees.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add("vu"); observateur.unobserve(en.target); } });
+  }, {rootMargin: "0px 0px -8% 0px", threshold: 0.12}) : null;
+  function reveler(){
+    if (!observateur) return;
+    app.querySelectorAll(".grille .ecrin").forEach(function(c, i){
+      c.style.setProperty("--d", (i % 4) * 0.08 + "s");
+      c.addEventListener("animationend", function(){ c.classList.add("pret"); }, {once: true});
+      observateur.observe(c);
+    });
+  }
 
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
   function gnf(n){ n = Math.round(Number(n) || 0); return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " GNF"; }
@@ -476,6 +630,9 @@ button{cursor:pointer}
     if (ig) lignes.push('<div><dt>Instagram</dt><dd><a href="https://www.instagram.com/' + encodeURIComponent(ig) + '" target="_blank" rel="noopener">@' + esc(ig) + '</a></dd></div>');
     if (/^https?:\/\//i.test(etat.facebook || "")) lignes.push('<div><dt>Facebook</dt><dd><a href="' + esc(etat.facebook) + '" target="_blank" rel="noopener">Notre page Facebook</a></dd></div>');
     $("coordonnees").innerHTML = lignes.join("");
+    var waAccueil = waLien("Bonjour " + (etat.nom || "") + ", j'aimerais avoir des informations sur vos bijoux.");
+    ["cta-wa", "wa-flottant"].forEach(function(r){ var el = $(r); el.hidden = !waAccueil; if (waAccueil) el.href = waAccueil; });
+    reveler();
     $("titre-contact").textContent = etat.titreContact || "Nous contacter";
     $("texte-contact").textContent = etat.texteContact || "";
     $("pied").textContent = (etat.nom || "Bijouterie") + (etat.pays ? " · " + etat.pays : "") + " · Prix en francs guinéens (GNF).";
@@ -491,12 +648,17 @@ button{cursor:pointer}
   function sousTotal(){ return articles().reduce(function(s, a){ return s + (Number(a.p.prix) || 0) * a.q; }, 0); }
   function nbArticles(){ return articles().reduce(function(s, a){ return s + a.q; }, 0); }
   function majCompteur(){ $("compteur").textContent = nbArticles(); }
+  function sauter(){ var c = $("compteur"); c.classList.remove("saute"); void c.offsetWidth; c.classList.add("saute"); }
+  function confirmerBouton(b){
+    b.classList.add("fait"); b.textContent = "Ajouté ✓";
+    clearTimeout(b._t); b._t = setTimeout(function(){ b.classList.remove("fait"); b.textContent = "Ajouter au panier"; }, 1400);
+  }
   function toast(t){ var el = $("toast"); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function(){ el.hidden = true; }, 2200); }
 
   function ajouter(id){
     var l = panier.find(function(x){ return x.id === id; });
     if (l) l.q = Math.min(l.q + 1, 20); else panier.push({id: id, q: 1});
-    sauverPanier(); majCompteur();
+    sauverPanier(); majCompteur(); sauter();
     toast("Ajouté au panier : " + produit(id).nom);
   }
 
@@ -643,7 +805,7 @@ button{cursor:pointer}
     var b = e.target.closest(".filtre");
     if (b) { filtre = b.getAttribute("data-cat"); rendreVitrine(); return; }
     var a = e.target.closest("[data-ajouter]");
-    if (a) { ajouter(a.getAttribute("data-ajouter")); return; }
+    if (a) { ajouter(a.getAttribute("data-ajouter")); confirmerBouton(a); return; }
     if (e.target.closest('[data-r="ouvrir-panier"]')) return ouvrirPanier();
     if (e.target.closest('[data-r="fermer-panier"]') || e.target.closest('[data-r="voile"]')) return fermerPanier();
     var p = e.target.closest("[data-p]");
@@ -850,6 +1012,9 @@ button{cursor:pointer}
   }
 
   rendreVitrine();
+  var entete = app.querySelector(".entete");
+  function ombreEntete(){ entete.classList.toggle("defile", window.scrollY > 8); }
+  window.addEventListener("scroll", ombreEntete, {passive: true}); ombreEntete();
 
   (async function(){
     if (!window.claude || !window.claude.use) return;
@@ -862,5 +1027,3 @@ button{cursor:pointer}
   })();
 })();
 </script>
-</body>
-</html>
