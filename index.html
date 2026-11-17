@@ -15,6 +15,11 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kadya Jewels">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Figtree:wght@400;500;600;700&display=swap">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style id="css">
@@ -93,7 +98,7 @@ button{cursor:pointer}
 .stock.en-stock{background:var(--ok-doux);color:var(--ok)}
 .stock.limite{background:var(--limite-doux);color:var(--limite)}
 .stock.rupture{background:var(--rupture-doux);color:var(--rupture)}
-.ecrin.est-rupture .visuel img,.ecrin.est-rupture .visuel svg{opacity:.45}
+.ecrin.est-rupture .zone-fiche img,.ecrin.est-rupture .zone-fiche svg{opacity:.45}
 .contenu{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
 .contenu h3{font-size:1.14rem;line-height:1.25}
 .details{color:var(--muted);font-size:.86rem}
@@ -270,7 +275,7 @@ html{scroll-behavior:smooth}
 /* Écrins : relief, zoom doux et reflet au survol */
 .ecrin{box-shadow:var(--ombre-1);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .3s}
 .visuel{overflow:hidden}
-.visuel img,.visuel svg{transition:transform .8s var(--ease)}
+.zone-fiche img,.zone-fiche svg{transition:transform .8s var(--ease)}
 .visuel::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);transform:translateX(-130%)}
 .pastille,.stock{z-index:2}
 .pastille{background:rgba(255,255,255,.86);backdrop-filter:blur(6px)}
@@ -282,8 +287,8 @@ html{scroll-behavior:smooth}
 .lien-wa:hover{color:var(--marque)}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   .ecrin:hover,.js-anim .ecrin.pret:hover{transform:translateY(-6px);box-shadow:var(--ombre-2);border-color:rgba(154,106,28,.45)}
-  .ecrin:hover .visuel img{transform:scale(1.06)}
-  .ecrin:hover .visuel svg{transform:scale(1.1) rotate(-4deg)}
+  .ecrin:hover .zone-fiche img{transform:scale(1.06)}
+  .ecrin:hover .zone-fiche svg{transform:scale(1.1) rotate(-4deg)}
   .ecrin:hover .visuel::after{transform:translateX(130%);transition:transform 1s var(--ease)}
 }
 .js-anim .ecrin{opacity:0}
@@ -310,6 +315,176 @@ html{scroll-behavior:smooth}
 .wa-flottant:active{transform:scale(.94)}
 @media (max-width:720px){.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}.pied .enveloppe{padding-right:84px}}
 
+/* Club Kadya */
+.annonce{background:var(--marque-fonce);color:var(--or);font-size:.84rem;text-align:center;letter-spacing:.02em}
+.annonce a{display:block;padding:8px 16px;color:inherit;text-decoration:none}
+.annonce a:hover{text-decoration:underline;text-underline-offset:3px}
+.club{padding-bottom:64px;scroll-margin-top:96px}
+.club-grille{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:center;background:linear-gradient(135deg,#FFFFFF 0%,var(--or-doux) 100%);border:1px solid rgba(154,106,28,.35);border-radius:22px;padding:40px;box-shadow:var(--ombre-1)}
+.club-grille::after{content:attr(data-pct);position:absolute;z-index:-1;right:-12px;top:-40px;font-family:var(--display);font-size:clamp(7rem,16vw,12rem);line-height:1;color:rgba(154,106,28,.08);pointer-events:none;white-space:nowrap}
+.club .etiquette{color:var(--or-texte)}
+.club h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;color:var(--marque);margin-top:8px}
+.club-texte>p:not(.etiquette){color:var(--muted);margin:12px 0 0;max-width:46ch}
+.avantages{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+.avantages li{display:flex;gap:10px;align-items:center;font-size:.95rem}
+.avantages li::before{content:"✦";color:var(--or-texte)}
+.club-carte{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--ombre-2);min-width:0}
+.club-carte form{display:grid;gap:12px}
+.club-carte .choix{font-size:.84rem;color:var(--muted)}
+.club-merci{display:grid;gap:10px;animation:monte .5s var(--ease) both}
+.club-merci .bienvenue{font-family:var(--display);font-size:1.35rem;color:var(--marque);margin:0}
+.club-merci p{margin:0}
+.code-promo{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1.5px dashed var(--or-texte);border-radius:12px;padding:12px 14px;background:var(--or-doux)}
+.code-promo .numero{font-size:clamp(1.05rem,4.6vw,1.3rem);letter-spacing:.06em;color:var(--marque);white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.copier{border:1px solid var(--or-texte);background:var(--surface);color:var(--marque);border-radius:999px;padding:7px 14px;font-weight:600;font-size:.86rem;flex:none}
+.ligne-total.remise{color:var(--ok);font-weight:600}
+.indice{font-size:.82rem;color:var(--muted)}
+.indice.ok{color:var(--ok)}
+@media (max-width:760px){.club-grille{grid-template-columns:1fr;gap:22px;padding:26px 18px}}
+
+/* ---------- Menu latéral ---------- */
+.bouton-menu{flex:none;width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,246,234,.35);background:transparent;color:#FFF6EA;display:grid;place-items:center;transition:border-color .25s,background-color .25s}
+.bouton-menu:hover{border-color:var(--or);background:rgba(255,190,92,.1)}
+.bouton-menu svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;fill:none}
+.voile-menu{position:fixed;inset:0;background:rgba(43,20,18,.45);z-index:40}
+.voile-menu:not([hidden]){animation:fondu .3s ease both;backdrop-filter:blur(2px)}
+.menu{position:fixed;top:0;left:0;bottom:0;width:min(340px,88vw);background:var(--bg);z-index:41;display:flex;flex-direction:column;box-shadow:12px 0 32px -18px rgba(0,0,0,.4);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px)}
+.menu:not([hidden]){animation:glisse-g .45s var(--ease) both}
+.menu-tete{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;background:var(--marque);border-bottom:2px solid var(--or);color:#FFF6EA}
+.menu-tete .logo{height:44px}
+.menu-corps{flex:1;overflow-y:auto;padding:14px 12px 24px}
+.menu-titre{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--or-texte);margin:18px 10px 6px}
+.menu-lien{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;border:none;background:none;padding:11px 10px;border-radius:10px;color:var(--ink);text-decoration:none;font-size:.98rem;transition:background-color .2s,padding-left .25s var(--ease)}
+.menu-lien:hover{background:var(--surface);padding-left:14px}
+.menu-lien.actif{background:var(--surface);color:var(--marque);font-weight:600;box-shadow:inset 3px 0 0 var(--or-texte)}
+.menu-lien span{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums}
+.menu-pied{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--line);background:var(--surface)}
+.menu-pied a{font-size:.88rem;color:var(--marque);font-weight:600}
+
+/* ---------- Recherche et tri ---------- */
+.recherche{position:relative;flex:1;min-width:0}
+.recherche svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
+.recherche input{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:11px 14px 11px 38px;min-height:44px;transition:border-color .2s,box-shadow .2s}
+.recherche input:focus{outline:none;border-color:var(--or-texte);box-shadow:0 0 0 3px rgba(255,190,92,.3)}
+.barre-outils{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-bottom:4px}
+.tri{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--muted)}
+.tri select{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 12px;min-height:44px;color:var(--ink)}
+@media (max-width:560px){.barre-outils .recherche{flex-basis:100%}.tri{flex:1}.tri select{flex:1}}
+
+/* ---------- Écrins : favoris, badges, prix barré ---------- */
+.zone-fiche{position:absolute;inset:0;display:grid;place-items:center}
+.zone-fiche img{width:100%;height:100%;object-fit:cover}
+.contenu h3 a{color:inherit;text-decoration:none}
+.contenu h3 a:hover{color:var(--marque)}
+.coeur{position:absolute;top:8px;right:8px;z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.88);backdrop-filter:blur(6px);display:grid;place-items:center;transition:transform .3s var(--ease-ressort)}
+.coeur svg{width:19px;height:19px;stroke:var(--marque);stroke-width:1.8;fill:none;transition:fill .2s}
+.coeur[aria-pressed="true"] svg{fill:var(--marque)}
+.coeur:active{transform:scale(.85)}
+.coeur.bat{animation:bat .45s var(--ease-ressort)}
+.badges{position:absolute;top:40px;left:10px;z-index:2;display:grid;gap:4px;justify-items:start}
+.badge{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px}
+.badge.promo{background:var(--marque);color:#FFF6EA}
+.badge.nouveau{background:var(--or);color:var(--marque-fonce)}
+.prix s{color:var(--muted);font-family:var(--body);font-size:.85rem;font-weight:400;margin-right:6px}
+.prix.en-promo{color:var(--rupture)}
+.ecrin .prix s{display:block;margin:0 0 2px;white-space:nowrap}
+
+/* ---------- Fiche bijou ---------- */
+.fiche{position:fixed;inset:0;z-index:45;background:rgba(43,20,18,.55);display:grid;place-items:center;padding:24px}
+.fiche:not([hidden]){animation:fondu .25s ease both;backdrop-filter:blur(3px)}
+.fiche-boite{position:relative;background:var(--bg);border-radius:20px;width:min(1000px,100%);max-height:100%;overflow-y:auto;box-shadow:0 30px 80px -30px rgba(0,0,0,.6);animation:monte .45s var(--ease) both}
+.fiche-fermer{position:sticky;top:12px;float:right;margin:12px 12px 0 0;z-index:5;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:1.1rem;box-shadow:var(--ombre-1)}
+.fiche-grille{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;padding:24px}
+.galerie{display:grid;gap:10px;min-width:0}
+.fiche-image{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:radial-gradient(circle at 50% 42%,var(--or-doux),var(--surface) 72%);display:grid;place-items:center;cursor:zoom-in;border:1px solid var(--line)}
+.fiche-image img{width:100%;height:100%;object-fit:cover;transition:transform .35s var(--ease);transform-origin:var(--x,50%) var(--y,50%)}
+.fiche-image svg{width:45%;height:45%;stroke:var(--or-texte);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.fiche-image.zoome{cursor:zoom-out}
+.fiche-image.zoome img{transform:scale(2.2)}
+.miniatures{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.miniatures button{flex:none;width:64px;height:64px;border-radius:10px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--or-doux)}
+.miniatures button[aria-pressed="true"]{border-color:var(--or-texte)}
+.miniatures img{width:100%;height:100%;object-fit:cover}
+.fiche-infos{display:grid;gap:12px;align-content:start;min-width:0;padding-top:8px}
+.fiche-infos .pastille,.fiche-infos .stock{position:static;display:inline-block}
+.fiche-etiquettes{display:flex;gap:6px;flex-wrap:wrap}
+.fiche-infos h2{font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1.1;color:var(--ink)}
+.fiche-infos .prix{font-size:1.6rem;margin:0;padding:0}
+.fiche-infos .prix s{font-size:1rem}
+.fiche-infos p{margin:0;color:var(--muted)}
+.fiche-actions{display:grid;grid-template-columns:1fr auto auto;gap:8px}
+.fiche-actions .ajouter{margin:0;padding:14px}
+.icone-btn{width:50px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.icone-btn svg{width:21px;height:21px;stroke:var(--marque);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.icone-btn[aria-pressed="true"] svg{fill:var(--marque)}
+.encart{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px;font-size:.92rem}
+.encart strong{color:var(--marque);font-weight:600}
+.encart a{color:var(--or-texte);font-weight:600}
+.suggestions{padding:0 24px 26px;clear:both}
+.suggestions h3{font-size:1.35rem;color:var(--marque);margin-bottom:12px}
+.suggestions .liste-sugg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.sugg{border:1px solid var(--line);background:var(--surface);border-radius:12px;overflow:hidden;text-align:left;padding:0;display:grid;transition:transform .3s var(--ease),box-shadow .3s}
+.sugg:hover{transform:translateY(-3px);box-shadow:var(--ombre-1)}
+.sugg .mini{aspect-ratio:1/1;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,var(--or-doux),var(--surface) 72%)}
+.sugg .mini img{width:100%;height:100%;object-fit:cover}
+.sugg .mini svg{width:42%;height:42%;stroke:var(--or-texte);fill:none;stroke-width:1.4}
+.sugg span{padding:8px 10px 0;font-size:.88rem;font-weight:600;overflow-wrap:anywhere}
+.sugg small{padding:2px 10px 10px;color:var(--marque);font-family:var(--display);font-size:.98rem}
+@media (max-width:760px){
+  .fiche{padding:0;place-items:end stretch}
+  .fiche-boite{border-radius:20px 20px 0 0;max-height:94vh;max-height:94dvh}
+  .fiche-grille{grid-template-columns:1fr;gap:16px;padding:14px 16px}
+  .suggestions{padding:0 16px 24px}
+  .suggestions .liste-sugg{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ---------- Livraison offerte ---------- */
+.offerte{display:grid;gap:6px;font-size:.88rem}
+.offerte .jauge{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.offerte .jauge i{display:block;height:100%;background:linear-gradient(90deg,var(--or-texte),var(--or));border-radius:inherit;transition:width .6s var(--ease)}
+.offerte.atteinte{color:var(--ok);font-weight:600}
+
+/* ---------- Avis ---------- */
+.avis{padding-bottom:56px}
+.avis .titre-section{padding-top:0}
+.liste-avis{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.carte-avis{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:10px;box-shadow:var(--ombre-1)}
+.etoiles{color:var(--or-texte);letter-spacing:2px;font-size:1rem}
+.carte-avis blockquote{margin:0;font-size:.98rem}
+.carte-avis cite{font-style:normal;color:var(--muted);font-size:.86rem}
+
+/* ---------- Aide : guide des tailles et FAQ ---------- */
+.aide{background:var(--surface);border-top:1px solid var(--line)}
+.aide .enveloppe{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding-block:48px}
+.aide h2{font-size:1.7rem;color:var(--marque);scroll-margin-top:96px}
+.aide h2::after{content:"";display:block;width:56px;height:2px;margin-top:10px;background:linear-gradient(90deg,var(--or-texte),var(--or),transparent)}
+.aide ol{margin:16px 0;padding-left:20px;display:grid;gap:6px;color:var(--ink)}
+.tableau-tailles{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums;margin-top:6px}
+.tableau-tailles th,.tableau-tailles td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+.tableau-tailles th{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.tableau-tailles tr:hover td{background:var(--bg)}
+.astuce{background:var(--or-doux);border-radius:12px;padding:12px 14px;font-size:.9rem;margin-top:14px}
+.faq{display:grid;gap:8px;margin-top:16px}
+.faq details{border:1px solid var(--line);border-radius:12px;background:var(--bg);overflow:hidden}
+.faq summary{cursor:pointer;list-style:none;padding:14px 44px 14px 16px;font-weight:600;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--or-texte);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details p{margin:0;padding:0 16px 14px;color:var(--muted);white-space:pre-line}
+.faq details[open] p{animation:monte .35s var(--ease) both}
+@media (max-width:760px){.aide .enveloppe{grid-template-columns:1fr;gap:36px;padding-block:36px}}
+
+/* ---------- Gestion : avis et photos ---------- */
+.photos-sup{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.photos-sup .vignette{position:relative;width:64px;height:64px;border-radius:10px;overflow:hidden;background:var(--or-doux)}
+.photos-sup .vignette img{width:100%;height:100%;object-fit:cover}
+.photos-sup .vignette button{position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:.75rem;line-height:1}
+.ligne-avis{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ligne-avis p{margin:2px 0 0;color:var(--muted);font-size:.88rem}
+
+@keyframes glisse-g{from{transform:translateX(-100%)}}
+@keyframes bat{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
+
 @keyframes reflet{0%{background-position:-60% 0}60%,100%{background-position:160% 0}}
 @keyframes saute{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
 @keyframes flotte{from{transform:translate(0,0)}to{transform:translate(-40px,30px)}}
@@ -334,8 +509,10 @@ html{scroll-behavior:smooth}
 <div id="app"></div>
 
 <template id="gabarit">
+<div class="annonce" data-r="annonce" hidden><a href="#club" data-r="annonce-lien"></a></div>
 <header class="entete">
   <div class="enveloppe">
+    <button class="bouton-menu" type="button" data-r="ouvrir-menu" aria-label="Ouvrir le menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="marque">
       <span data-r="logo"></span>
       <div style="min-width:0">
@@ -382,11 +559,64 @@ html{scroll-behavior:smooth}
 
 <main class="enveloppe" id="bijoux">
   <div class="titre-section"><h2>Nos bijoux</h2><span data-r="nb-bijoux"></span></div>
+  <div class="barre-outils">
+    <div class="recherche"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><label class="sr" for="recherche">Rechercher un bijou</label><input id="recherche" type="search" data-r="recherche" placeholder="Rechercher un bijou, une couleur…" autocomplete="off"></div>
+    <label class="tri">Trier <select data-r="tri"><option value="">Sélection</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option><option value="nouveau">Nouveautés d'abord</option><option value="promo">Promotions d'abord</option></select></label>
+  </div>
   <nav class="filtres" aria-label="Catégories" data-r="filtres"></nav>
   <section class="grille" data-r="grille" aria-live="polite"></section>
 </main>
 
-<section class="contact">
+<section class="avis" id="avis" data-r="avis" hidden>
+  <div class="enveloppe">
+    <div class="titre-section"><h2>Elles portent Kadya</h2><span data-r="nb-avis"></span></div>
+    <div class="liste-avis" data-r="liste-avis-vitrine"></div>
+  </div>
+</section>
+
+<section class="club" id="club" data-r="club" hidden>
+  <div class="enveloppe">
+    <div class="club-grille" data-r="club-grille">
+      <div class="club-texte">
+        <p class="etiquette">Club Kadya</p>
+        <h2 data-r="club-titre"></h2>
+        <p>Inscrivez-vous avec votre adresse e-mail : vous recevez votre code de bienvenue tout de suite, puis nos nouveautés et nos offres réservées aux membres.</p>
+        <ul class="avantages">
+          <li>Code de bienvenue immédiat</li>
+          <li>Offres privées et ventes flash</li>
+          <li>Nouveautés en avant-première</li>
+        </ul>
+      </div>
+      <div class="club-carte" data-r="club-carte"></div>
+    </div>
+  </div>
+</section>
+
+<section class="aide" id="aide">
+  <div class="enveloppe">
+    <div>
+      <h2 id="guide">Guide des tailles</h2>
+      <p class="details" style="margin-top:14px">Pour trouver votre taille de bague, il suffit d'un fil et d'une règle :</p>
+      <ol>
+        <li>Enroulez un fil ou une bande de papier autour de la base du doigt.</li>
+        <li>Marquez l'endroit où le fil se rejoint.</li>
+        <li>Mesurez la longueur en millimètres : c'est votre taille.</li>
+      </ol>
+      <table class="tableau-tailles">
+        <thead><tr><th>Taille</th><th>Tour de doigt</th><th>Diamètre intérieur</th></tr></thead>
+        <tbody data-r="tailles"></tbody>
+      </table>
+      <p class="astuce"><strong>Astuces :</strong> mesurez en fin de journée, quand les doigts sont un peu plus gros. Entre deux tailles, prenez la plus grande. Vous pouvez aussi mesurer le diamètre intérieur d'une bague que vous portez déjà.</p>
+      <p class="details" style="margin-top:14px"><strong>Colliers :</strong> 40–42 cm se portent ras du cou, 45 cm à la base du cou, 50 cm et plus descendent sur la poitrine.</p>
+    </div>
+    <div>
+      <h2 id="faq">Questions fréquentes</h2>
+      <div class="faq" data-r="faq"></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
   <div class="enveloppe">
     <div>
       <h2 data-r="titre-contact"></h2>
@@ -404,6 +634,18 @@ html{scroll-behavior:smooth}
   <div class="panier-pied" data-r="panier-pied"></div>
 </aside>
 <div class="toast" data-r="toast" hidden role="status"></div>
+<div class="voile-menu" data-r="voile-menu" hidden></div>
+<aside class="menu" data-r="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-tete"><span data-r="menu-logo"></span><button class="fermer" type="button" data-r="fermer-menu" aria-label="Fermer le menu">✕</button></div>
+  <div class="menu-corps">
+    <form data-r="form-recherche-menu" class="recherche" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><label class="sr" for="recherche-menu">Rechercher</label><input id="recherche-menu" type="search" name="q" placeholder="Rechercher un bijou…" autocomplete="off"></form>
+    <div data-r="menu-liens"></div>
+  </div>
+  <div class="menu-pied" data-r="menu-pied"></div>
+</aside>
+<div class="fiche" data-r="fiche" hidden role="dialog" aria-modal="true" aria-label="Détail du bijou">
+  <div class="fiche-boite" data-r="fiche-boite"></div>
+</div>
 <a class="wa-flottant" data-r="wa-flottant" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/><path d="M9 10h6M9 13.5h4"/></svg></a>
 
 <div class="gestion" data-r="gestion" hidden role="dialog" aria-modal="true" aria-labelledby="titre-gestion">
@@ -418,8 +660,9 @@ html{scroll-behavior:smooth}
     <div data-r="message-gestion"></div>
     <div class="onglets" role="tablist">
       <button class="onglet" type="button" role="tab" data-onglet="boutique" aria-selected="true">Boutique</button>
-      <button class="onglet" type="button" role="tab" data-onglet="commandes" aria-selected="false">Livraison et paiement</button>
+      <button class="onglet" type="button" role="tab" data-onglet="commandes" aria-selected="false">Livraison, paiement et Club</button>
       <button class="onglet" type="button" role="tab" data-onglet="produits" aria-selected="false">Produits, prix et stock</button>
+      <button class="onglet" type="button" role="tab" data-onglet="contenu" aria-selected="false">Avis, FAQ et statistiques</button>
     </div>
 
     <div data-panneau="boutique">
@@ -479,6 +722,7 @@ html{scroll-behavior:smooth}
         <div class="champ"><label for="f-frais1">Frais de livraison zone 1 (GNF)</label><input id="f-frais1" data-f="frais1" inputmode="numeric" placeholder="Vide = à confirmer"></div>
         <div class="champ"><label for="f-zone2">Zone de livraison 2</label><input id="f-zone2" data-f="zone2" placeholder="Ex. : Autres villes de Guinée"></div>
         <div class="champ"><label for="f-frais2">Frais de livraison zone 2 (GNF)</label><input id="f-frais2" data-f="frais2" inputmode="numeric" placeholder="Vide = à confirmer"></div>
+        <div class="champ large"><label for="f-offerte">Livraison offerte à partir de (GNF)</label><input id="f-offerte" data-f="livraisonOfferte" inputmode="numeric" placeholder="Ex. : 300000 — vide = jamais offerte"><small>Le panier affiche « Plus que … pour la livraison offerte ».</small></div>
       </div>
       <h3 class="sous-titre">Moyens de paiement proposés</h3>
       <div class="champs">
@@ -490,6 +734,33 @@ html{scroll-behavior:smooth}
         <label class="case"><input type="checkbox" data-c="boutique"> Paiement en boutique</label>
         <div class="champ large"><label for="f-nom-compte">Nom du titulaire des comptes (facultatif)</label><input id="f-nom-compte" data-f="titulaire" placeholder="Ex. : Kadiatou Sylla"><small>Affiché au client pour qu'il vérifie le destinataire avant d'envoyer l'argent.</small></div>
       </div>
+      <h3 class="sous-titre">Club Kadya (inscription par e-mail)</h3>
+      <div class="champs">
+        <label class="case"><input type="checkbox" data-c="club"> Afficher le Club et la réduction de bienvenue</label>
+        <div></div>
+        <div class="champ"><label for="f-club-pct">Réduction de bienvenue (%)</label><input id="f-club-pct" data-f="clubReduction" inputmode="numeric" placeholder="10"></div>
+        <div class="champ"><label for="f-club-code">Code de bienvenue</label><input id="f-club-code" data-f="clubCode" placeholder="BIENVENUE10" autocapitalize="characters"><small>Le client le saisit au moment de commander.</small></div>
+        <div class="champ large"><label for="f-club-brevo">Lien du formulaire Brevo</label><input id="f-club-brevo" data-f="clubBrevo" inputmode="url" placeholder="https://….sibforms.com/serve/…"><small>Les adresses e-mail des inscrits sont envoyées dans votre liste Brevo. Sans ce lien, le client reçoit quand même son code, mais son e-mail n'est enregistré nulle part.</small></div>
+      </div>
+    </div>
+
+    <div data-panneau="contenu" hidden>
+      <h3 class="sous-titre" style="margin-top:0">Avis de clientes</h3>
+      <p class="details" style="margin:0 0 12px">Ajoutez uniquement de vrais avis reçus (WhatsApp, TikTok, en boutique), avec l'accord de la cliente. La section reste cachée tant qu'il n'y a aucun avis.</p>
+      <div class="champs">
+        <div class="champ"><label for="a-nom">Prénom de la cliente</label><input id="a-nom" data-a="nom" maxlength="40"></div>
+        <div class="champ"><label for="a-ville">Ville ou quartier (facultatif)</label><input id="a-ville" data-a="ville" maxlength="40"></div>
+        <div class="champ"><label for="a-note">Note</label><select id="a-note" data-a="note"><option value="5">5 étoiles</option><option value="4">4 étoiles</option><option value="3">3 étoiles</option><option value="2">2 étoiles</option><option value="1">1 étoile</option></select></div>
+        <div class="champ large"><label for="a-texte">Avis</label><textarea id="a-texte" data-a="texte" rows="2" maxlength="300"></textarea></div>
+      </div>
+      <div class="actions" style="margin:12px 0"><button class="btn principal" type="button" data-act="ajouter-avis">Ajouter cet avis</button></div>
+      <div class="liste-produits" data-r="liste-avis"></div>
+      <h3 class="sous-titre">Questions fréquentes</h3>
+      <div class="champ large"><label for="f-faq">Questions et réponses</label><textarea id="f-faq" data-f="faq" rows="12"></textarea><small>Une question par bloc : la question sur la première ligne, la réponse en dessous, puis une ligne vide avant la question suivante.</small></div>
+      <h3 class="sous-titre">Entretien des bijoux</h3>
+      <div class="champ large"><label for="f-entretien">Conseils affichés sur chaque fiche bijou</label><textarea id="f-entretien" data-f="entretien" rows="3" maxlength="400"></textarea></div>
+      <h3 class="sous-titre">Statistiques de visite</h3>
+      <div class="champ large"><label for="f-goat">Code GoatCounter</label><input id="f-goat" data-f="goatcounter" placeholder="Ex. : kadyajewels"><small>Créez un compte gratuit sur goatcounter.com, puis indiquez le code choisi (la partie avant .goatcounter.com). Les visites du site kadyajewels.com seront alors comptées.</small></div>
     </div>
 
     <div data-panneau="produits" hidden>
@@ -523,7 +794,14 @@ html{scroll-behavior:smooth}
   var STOCKS = {"en-stock":"En stock","limite":"Stock limité","rupture":"Rupture de stock"};
   var RESET = ':root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}';
   var POLICES = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Figtree:wght@400;500;600;700&display=swap">';
-  var CLE_PANIER = "kadya-panier";
+  var CLE_PANIER = "kadya-panier", CLE_CLUB = "kadya-club", CLE_FAV = "kadya-favoris";
+  var FAQ_DEFAUT = [
+    {q: "Les bijoux noircissent-ils ?", r: "Non. Nos bijoux sont en acier inoxydable : ils ne s'oxydent pas comme l'argent ou le métal ordinaire et gardent leur couleur au quotidien."},
+    {q: "Comment passer commande ?", r: "Ajoutez vos bijoux au panier, indiquez vos coordonnées, puis envoyez la commande sur WhatsApp. Nous vous confirmons la disponibilité avant tout paiement."},
+    {q: "Comment payer ?", r: "Selon les options proposées au moment de la commande : Orange Money, MTN Mobile Money, paiement à la livraison ou en boutique. Ne payez qu'après notre confirmation sur WhatsApp."},
+    {q: "Livrez-vous partout en Guinée ?", r: "Nous livrons à Conakry et dans les autres villes de Guinée. Les frais et le délai vous sont confirmés sur WhatsApp."},
+    {q: "Comment connaître ma taille de bague ?", r: "Consultez notre guide des tailles : un fil et une règle suffisent. En cas de doute, écrivez-nous sur WhatsApp."}
+  ];
 
   var etat;
   try { etat = JSON.parse(document.getElementById("donnees").textContent); } catch (e) { etat = {produits:[]}; }
@@ -533,9 +811,21 @@ html{scroll-behavior:smooth}
       if (!p.stock) p.stock = p.dispo === false ? "rupture" : "en-stock";
       delete p.dispo; delete p.poids;
       if (p.taille == null) p.taille = "";
+      if (!Array.isArray(p.photos)) p.photos = [];
+      if (p.prixAvant == null) p.prixAvant = "";
+      if (p.badge == null) p.badge = "";
     });
+    if (!Array.isArray(o.avis)) o.avis = [];
+    if (!Array.isArray(o.faq)) o.faq = FAQ_DEFAUT.slice();
+    if (o.entretien == null) o.entretien = "L'acier inoxydable ne noircit pas et supporte l'eau du quotidien. Pour garder tout son éclat : évitez de vaporiser le parfum directement sur le bijou, essuyez-le avec un chiffon doux et rangez-le à part pour éviter les rayures.";
+    if (o.livraisonOfferte == null) o.livraisonOfferte = "";
+    if (o.goatcounter == null) o.goatcounter = "";
     o.livraison = o.livraison || {};
     o.paiements = o.paiements || {orange:true, mtn:true, livraison:true, boutique:true};
+    if (o.clubActif == null) o.clubActif = true;
+    if (o.clubReduction == null || o.clubReduction === "") o.clubReduction = "10";
+    if (!o.clubCode) o.clubCode = "BIENVENUE10";
+    if (o.clubBrevo == null) o.clubBrevo = "";
     return o;
   }
   normaliser(etat);
@@ -553,9 +843,10 @@ html{scroll-behavior:smooth}
   var observateur = ANIM ? new IntersectionObserver(function(entrees){
     entrees.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add("vu"); observateur.unobserve(en.target); } });
   }, {rootMargin: "0px 0px -8% 0px", threshold: 0.12}) : null;
-  function reveler(){
+  function reveler(instant){
     if (!observateur) return;
     app.querySelectorAll(".grille .ecrin").forEach(function(c, i){
+      if (instant) { c.classList.add("pret"); return; }
       c.style.setProperty("--d", (i % 4) * 0.08 + "s");
       c.addEventListener("animationend", function(){ c.classList.add("pret"); }, {once: true});
       observateur.observe(c);
@@ -573,6 +864,12 @@ html{scroll-behavior:smooth}
   function couleurValide(c){ return /^#[0-9a-f]{6}$/i.test(String(c || "")); }
   function produit(id){ return etat.produits.find(function(p){ return p.id === id; }); }
   function details(p){ return [p.metal, p.taille].filter(Boolean).join(" · "); }
+  function pctClub(){ return Math.min(90, Math.max(0, Math.round(Number(String(etat.clubReduction || "").replace(",", ".")) || 0))); }
+  function clubOn(){ return etat.clubActif !== false && pctClub() > 0 && !!String(etat.clubCode || "").trim(); }
+  function codeValide(code){ return clubOn() && String(code || "").trim().toUpperCase() === String(etat.clubCode).trim().toUpperCase(); }
+  function remise(code){ return codeValide(code) ? Math.round(sousTotal() * pctClub() / 100) : 0; }
+  var clubMemoire = null;
+  function lireClub(){ var v = null; try { v = JSON.parse(localStorage.getItem(CLE_CLUB) || "null"); } catch (e) {} return v || clubMemoire; }
   function waLien(texte){ var n = chiffres(etat.whatsapp); return n ? "https://wa.me/" + n + "?text=" + encodeURIComponent(texte) : ""; }
 
   /* ---------- Vitrine ---------- */
@@ -595,29 +892,9 @@ html{scroll-behavior:smooth}
     va.classList.toggle("vide", !etat.photoAccueil);
     $("bandeau").hidden = !etat.produits.some(function(p){ return p.exemple; });
 
-    var ordre = cats(etat).slice();
-    etat.produits.forEach(function(p){ if (p.categorie && ordre.indexOf(p.categorie) < 0) ordre.push(p.categorie); });
-    var presentes = ordre.filter(function(c){ return etat.produits.some(function(p){ return p.categorie === c; }); });
-    if (filtre !== "Tous" && presentes.indexOf(filtre) < 0) filtre = "Tous";
-    $("filtres").innerHTML = ["Tous"].concat(presentes).map(function(c){
-      return '<button type="button" class="filtre" data-cat="' + esc(c) + '" aria-pressed="' + (c === filtre) + '">' + esc(c) + '</button>';
-    }).join("");
-
-    var vis = etat.produits.filter(function(p){ return filtre === "Tous" || p.categorie === filtre; });
-    $("nb-bijoux").textContent = vis.length + (vis.length > 1 ? " bijoux" : " bijou");
-    $("grille").innerHTML = vis.length ? vis.map(function(p){
-      var rupture = p.stock === "rupture";
-      var wa = waLien("Bonjour " + (etat.nom || "") + ", je suis intéressé(e) par : " + p.nom + " (" + gnf(p.prix) + "). Est-il disponible ?");
-      return '<article class="ecrin' + (rupture ? ' est-rupture' : '') + '"><div class="visuel"><span class="pastille">' + esc(p.categorie) + '</span>' +
-        '<span class="stock ' + esc(p.stock) + '">' + esc(STOCKS[p.stock] || "") + '</span>' + visuel(p) + '</div>' +
-        '<div class="contenu"><h3>' + esc(p.nom) + '</h3>' +
-        (details(p) ? '<div class="details">' + esc(details(p)) + '</div>' : '') +
-        (p.description ? '<div class="details">' + esc(p.description) + '</div>' : '') +
-        '<div class="prix">' + gnf(p.prix) + '</div>' +
-        '<button type="button" class="ajouter" data-ajouter="' + esc(p.id) + '"' + (rupture ? ' disabled' : '') + '>' + (rupture ? 'Rupture de stock' : 'Ajouter au panier') + '</button>' +
-        (!rupture && wa ? '<a class="lien-wa" href="' + esc(wa) + '" target="_blank" rel="noopener">Question sur WhatsApp</a>' : '') +
-        '</div></article>';
-    }).join("") : '<p class="vide">Aucun bijou dans cette catégorie pour le moment.</p>';
+    rendreGrille();
+    rendreAvis();
+    rendreFaq();
 
     var lignes = [];
     if (chiffres(etat.whatsapp)) lignes.push('<div><dt>WhatsApp</dt><dd>' + esc(etat.whatsapp) + '</dd></div>');
@@ -632,11 +909,343 @@ html{scroll-behavior:smooth}
     $("coordonnees").innerHTML = lignes.join("");
     var waAccueil = waLien("Bonjour " + (etat.nom || "") + ", j'aimerais avoir des informations sur vos bijoux.");
     ["cta-wa", "wa-flottant"].forEach(function(r){ var el = $(r); el.hidden = !waAccueil; if (waAccueil) el.href = waAccueil; });
-    reveler();
+    rendreClub();
     $("titre-contact").textContent = etat.titreContact || "Nous contacter";
     $("texte-contact").textContent = etat.texteContact || "";
     $("pied").textContent = (etat.nom || "Bijouterie") + (etat.pays ? " · " + etat.pays : "") + " · Prix en francs guinéens (GNF).";
     majCompteur();
+  }
+
+
+  /* ---------- Catalogue : filtres, recherche, tri, favoris ---------- */
+  var recherche = "", tri = "";
+  var favoris = [];
+  try { favoris = JSON.parse(localStorage.getItem(CLE_FAV) || "[]"); if (!Array.isArray(favoris)) favoris = []; } catch (e) { favoris = []; }
+  var SPECIAUX = {"__nouveau": "Nouveautés", "__promo": "Promotions", "__favoris": "Favoris"};
+  var COEUR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9.2-9A4.8 4.8 0 0 1 12 6.6 4.8 4.8 0 0 1 21.2 11C19 15.6 12 20 12 20z"/></svg>';
+  var PARTAGE = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>';
+  function sauverFav(){ try { localStorage.setItem(CLE_FAV, JSON.stringify(favoris)); } catch (e) {} }
+  function estFav(id){ return favoris.indexOf(id) >= 0; }
+  function nbFav(){ return favoris.filter(function(id){ return produit(id); }).length; }
+  function prixAvant(p){ var a = Number(p.prixAvant) || 0; return a > (Number(p.prix) || 0) ? a : 0; }
+  function pctPromo(p){ var a = prixAvant(p); return a ? Math.round((a - p.prix) / a * 100) : 0; }
+  function estNouveau(p){ return p.badge === "nouveau"; }
+  function enPromo(p){ return !!prixAvant(p); }
+  function sansAccent(t){ return String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+  function ordreCats(){
+    var ordre = cats(etat).slice();
+    etat.produits.forEach(function(p){ if (p.categorie && ordre.indexOf(p.categorie) < 0) ordre.push(p.categorie); });
+    return ordre.filter(function(c){ return etat.produits.some(function(p){ return p.categorie === c; }); });
+  }
+  function filtrer(p){
+    if (filtre === "__nouveau") return estNouveau(p);
+    if (filtre === "__promo") return enPromo(p);
+    if (filtre === "__favoris") return estFav(p.id);
+    return filtre === "Tous" || p.categorie === filtre;
+  }
+  function visibles(){
+    var q = sansAccent(recherche).trim(), mots = q ? q.split(/\s+/) : [];
+    var v = etat.produits.filter(function(p){
+      if (!filtrer(p)) return false;
+      if (!mots.length) return true;
+      var t = sansAccent([p.nom, p.categorie, p.metal, p.taille, p.description].join(" "));
+      return mots.every(function(m){ return t.indexOf(m) >= 0; });
+    });
+    var idx = function(p){ return etat.produits.indexOf(p); };
+    var cmp = {
+      "prix-asc": function(a, b){ return a.prix - b.prix; },
+      "prix-desc": function(a, b){ return b.prix - a.prix; },
+      "nouveau": function(a, b){ return estNouveau(b) - estNouveau(a); },
+      "promo": function(a, b){ return pctPromo(b) - pctPromo(a); }
+    }[tri];
+    if (cmp) v.sort(function(a, b){ return cmp(a, b) || idx(a) - idx(b); });
+    return v;
+  }
+  function blocPrix(p){ var a = prixAvant(p); return '<div class="prix' + (a ? ' en-promo' : '') + '">' + (a ? '<s>' + gnf(a) + '</s>' : '') + gnf(p.prix) + '</div>'; }
+  function badgesListe(p){ var b = []; if (enPromo(p)) b.push('<span class="badge promo">−' + pctPromo(p) + ' %</span>'); if (estNouveau(p)) b.push('<span class="badge nouveau">Nouveau</span>'); return b.join(""); }
+  function boutonCoeur(p, cls){ var on = estFav(p.id); return '<button type="button" class="' + cls + '" data-fav="' + esc(p.id) + '" aria-pressed="' + on + '" aria-label="' + (on ? "Retirer des favoris" : "Ajouter aux favoris") + '">' + COEUR + '</button>'; }
+  function lienFiche(p){ return "#bijou-" + encodeURIComponent(p.id); }
+  function carte(p){
+    var rupture = p.stock === "rupture", b = badgesListe(p);
+    var wa = waLien("Bonjour " + (etat.nom || "") + ", je suis intéressé(e) par : " + p.nom + " (" + gnf(p.prix) + "). Est-il disponible ?");
+    return '<article class="ecrin' + (rupture ? ' est-rupture' : '') + '"><div class="visuel"><span class="pastille">' + esc(p.categorie) + '</span>' +
+      (b ? '<div class="badges">' + b + '</div>' : '') + boutonCoeur(p, "coeur") +
+      '<span class="stock ' + esc(p.stock) + '">' + esc(STOCKS[p.stock] || "") + '</span>' +
+      '<a class="zone-fiche" href="' + lienFiche(p) + '" data-fiche="' + esc(p.id) + '" aria-label="Voir le détail : ' + esc(p.nom) + '">' + visuel(p) + '</a></div>' +
+      '<div class="contenu"><h3><a href="' + lienFiche(p) + '" data-fiche="' + esc(p.id) + '">' + esc(p.nom) + '</a></h3>' +
+      (details(p) ? '<div class="details">' + esc(details(p)) + '</div>' : '') +
+      (p.description ? '<div class="details">' + esc(p.description) + '</div>' : '') +
+      blocPrix(p) +
+      '<button type="button" class="ajouter" data-ajouter="' + esc(p.id) + '"' + (rupture ? ' disabled' : '') + '>' + (rupture ? 'Rupture de stock' : 'Ajouter au panier') + '</button>' +
+      (!rupture && wa ? '<a class="lien-wa" href="' + esc(wa) + '" target="_blank" rel="noopener">Question sur WhatsApp</a>' : '') +
+      '</div></article>';
+  }
+  function rendreFiltres(){
+    var spec = [];
+    if (etat.produits.some(estNouveau)) spec.push("__nouveau");
+    if (etat.produits.some(enPromo)) spec.push("__promo");
+    if (nbFav()) spec.push("__favoris");
+    var valides = ["Tous"].concat(ordreCats(), spec);
+    if (valides.indexOf(filtre) < 0 && filtre !== "__favoris") filtre = "Tous";
+    if (filtre === "__favoris" && valides.indexOf(filtre) < 0) valides.push("__favoris");
+    $("filtres").innerHTML = valides.map(function(c){
+      var lib = c === "__favoris" ? "♡ Favoris (" + nbFav() + ")" : (SPECIAUX[c] || c);
+      return '<button type="button" class="filtre" data-cat="' + esc(c) + '" aria-pressed="' + (c === filtre) + '">' + esc(lib) + '</button>';
+    }).join("");
+  }
+  function rendreGrille(instant){
+    rendreFiltres();
+    var vis = visibles();
+    $("nb-bijoux").textContent = vis.length + (vis.length > 1 ? " bijoux" : " bijou");
+    var vide = recherche ? 'Aucun bijou ne correspond à « ' + esc(recherche) + ' ». <a href="#bijoux" data-effacer>Voir tous les bijoux</a>'
+      : filtre === "__favoris" ? "Vous n'avez pas encore de favoris. Touchez le ♡ d'un bijou pour le garder ici."
+      : "Aucun bijou dans cette catégorie pour le moment.";
+    $("grille").innerHTML = vis.length ? vis.map(carte).join("") : '<p class="vide">' + vide + '</p>';
+    reveler(instant);
+  }
+  function basculerFav(id){
+    var i = favoris.indexOf(id);
+    if (i >= 0) favoris.splice(i, 1); else favoris.push(id);
+    sauverFav();
+    var on = estFav(id);
+    app.querySelectorAll("[data-fav]").forEach(function(b){
+      if (b.getAttribute("data-fav") !== id) return;
+      b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Retirer des favoris" : "Ajouter aux favoris");
+      b.classList.remove("bat"); void b.offsetWidth; b.classList.add("bat");
+    });
+    toast(on ? "Ajouté à vos favoris" : "Retiré de vos favoris");
+    if (filtre === "__favoris") rendreGrille(true); else rendreFiltres();
+  }
+
+  /* ---------- Menu latéral ---------- */
+  function ancre(id, lib){ return '<a class="menu-lien" href="#' + id + '" data-ancre="' + id + '">' + esc(lib) + '<span aria-hidden="true">›</span></a>'; }
+  function rendreMenu(){
+    $("menu-logo").innerHTML = blocLogo(etat.logo, etat.nom);
+    var compte = function(f){ return etat.produits.filter(f).length; };
+    var lien = function(cat, lib, n){ return '<button type="button" class="menu-lien' + (filtre === cat && !recherche ? ' actif' : '') + '" data-menu-cat="' + esc(cat) + '">' + esc(lib) + '<span>' + n + '</span></button>'; };
+    var h = '<p class="menu-titre">Boutique</p>' + lien("Tous", "Tous les bijoux", etat.produits.length) +
+      ordreCats().map(function(c){ return lien(c, c, compte(function(p){ return p.categorie === c; })); }).join("");
+    var nNouv = compte(estNouveau), nPromo = compte(enPromo);
+    if (nNouv) h += lien("__nouveau", "Nouveautés", nNouv);
+    if (nPromo) h += lien("__promo", "Promotions", nPromo);
+    h += lien("__favoris", "♡ Mes favoris", nbFav());
+    h += '<p class="menu-titre">Aide</p>' + ancre("guide", "Guide des tailles") + ancre("faq", "Questions fréquentes") +
+      (etat.avis.length ? ancre("avis", "Avis de clientes") : "") +
+      (clubOn() ? ancre("club", "Club Kadya · −" + pctClub() + " %") : "") + ancre("contact", "Nous contacter");
+    if (installable()) h += '<p class="menu-titre">Application</p><button type="button" class="menu-lien" data-r="installer">Installer l\'application<span aria-hidden="true">＋</span></button>';
+    $("menu-liens").innerHTML = h;
+    var pied = [], wa = waLien("Bonjour " + (etat.nom || "") + ", j'aimerais avoir des informations sur vos bijoux.");
+    if (wa) pied.push('<a href="' + esc(wa) + '" target="_blank" rel="noopener">WhatsApp</a>');
+    var tk = String(etat.tiktok || "").replace(/^@/, "").trim();
+    if (tk) pied.push('<a href="https://www.tiktok.com/@' + encodeURIComponent(tk) + '" target="_blank" rel="noopener">TikTok</a>');
+    var ig = String(etat.instagram || "").replace(/^@/, "").trim();
+    if (ig) pied.push('<a href="https://www.instagram.com/' + encodeURIComponent(ig) + '" target="_blank" rel="noopener">Instagram</a>');
+    $("menu-pied").innerHTML = pied.join("<span aria-hidden=\"true\">·</span>");
+    $("menu-pied").hidden = !pied.length;
+  }
+  function ouvrirMenu(){ rendreMenu(); $("voile-menu").hidden = false; $("menu").hidden = false; document.body.style.overflow = "hidden"; $("ouvrir-menu").setAttribute("aria-expanded", "true"); $("fermer-menu").focus(); }
+  function fermerMenu(){ if ($("menu").hidden) return; $("voile-menu").hidden = true; $("menu").hidden = true; document.body.style.overflow = ""; $("ouvrir-menu").setAttribute("aria-expanded", "false"); }
+  function allerA(id){ var el = document.getElementById(id); if (el) setTimeout(function(){ el.scrollIntoView({behavior: ANIM ? "smooth" : "auto", block: "start"}); }, 120); }
+
+  /* ---------- Fiche bijou ---------- */
+  var ficheId = null, fichePoussee = false, photoActive = 0;
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  function photosDe(p){ return [p.photo].concat(Array.isArray(p.photos) ? p.photos : []).filter(Boolean); }
+  function suggestions(p){
+    var autres = etat.produits.filter(function(x){ return x.id !== p.id; });
+    var score = function(x){ return (x.categorie === p.categorie ? 2 : 0) + (x.stock !== "rupture" ? 1 : 0); };
+    return autres.map(function(x, i){ return {x: x, s: score(x), i: i}; })
+      .sort(function(a, b){ return b.s - a.s || a.i - b.i; }).slice(0, 4).map(function(o){ return o.x; });
+  }
+  function rendreFiche(){
+    var p = produit(ficheId); if (!p) return;
+    var ph = photosDe(p), rupture = p.stock === "rupture", b = badgesListe(p);
+    if (photoActive >= ph.length) photoActive = 0;
+    var wa = waLien("Bonjour " + (etat.nom || "") + ", je suis intéressé(e) par : " + p.nom + " (" + gnf(p.prix) + "). Est-il disponible ?");
+    var bague = p.categorie === "Bagues" || /bague/i.test(p.nom);
+    var sugg = suggestions(p);
+    $("fiche-boite").innerHTML = '<button class="fiche-fermer" type="button" data-r="fermer-fiche" aria-label="Fermer">✕</button>' +
+      '<div class="fiche-grille"><div class="galerie"><div class="fiche-image" data-r="fiche-image"' + (ph.length ? ' title="Touchez pour zoomer"' : '') + '>' +
+        (ph.length ? '<img alt="' + esc(p.nom) + '" src="' + esc(ph[photoActive]) + '">' : (ICONES[p.categorie] || ICONES.Autres)) + '</div>' +
+        (ph.length > 1 ? '<div class="miniatures">' + ph.map(function(u, i){ return '<button type="button" data-photo="' + i + '" aria-pressed="' + (i === photoActive) + '" aria-label="Photo ' + (i + 1) + '"><img alt="" src="' + esc(u) + '"></button>'; }).join("") + '</div>' : '') +
+      '</div><div class="fiche-infos">' +
+        '<div class="fiche-etiquettes"><span class="pastille">' + esc(p.categorie) + '</span>' + b + '<span class="stock ' + esc(p.stock) + '">' + esc(STOCKS[p.stock] || "") + '</span></div>' +
+        '<h2>' + esc(p.nom) + '</h2>' + blocPrix(p) +
+        (details(p) ? '<p>' + esc(details(p)) + '</p>' : '') + (p.description ? '<p>' + esc(p.description) + '</p>' : '') +
+        '<div class="fiche-actions"><button type="button" class="ajouter" data-ajouter="' + esc(p.id) + '"' + (rupture ? ' disabled' : '') + '>' + (rupture ? 'Rupture de stock' : 'Ajouter au panier') + '</button>' +
+          boutonCoeur(p, "icone-btn") + '<button type="button" class="icone-btn" data-partager="' + esc(p.id) + '" aria-label="Partager ce bijou">' + PARTAGE + '</button></div>' +
+        (wa ? '<a class="lien-wa" href="' + esc(wa) + '" target="_blank" rel="noopener">Une question ? Écrivez-nous sur WhatsApp</a>' : '') +
+        (bague ? '<div class="encart"><strong>Votre taille</strong><span>' + (p.taille ? esc(p.taille) + '. ' : '') + '<a href="#guide" data-ancre="guide">Consulter le guide des tailles</a></span></div>' : '') +
+        (etat.entretien ? '<div class="encart"><strong>Entretien</strong><span>' + esc(etat.entretien) + '</span></div>' : '') +
+        (clubOn() ? '<div class="encart"><strong>Club Kadya</strong><span>−' + pctClub() + ' % sur votre première commande. <a href="#club" data-ancre="club">S\'inscrire</a></span></div>' : '') +
+      '</div></div>' +
+      (sugg.length ? '<div class="suggestions"><h3>Vous aimerez aussi</h3><div class="liste-sugg">' + sugg.map(function(x){
+        return '<button type="button" class="sugg" data-fiche="' + esc(x.id) + '"><div class="mini">' + visuel(x) + '</div><span>' + esc(x.nom) + '</span><small>' + gnf(x.prix) + '</small></button>';
+      }).join("") + '</div></div>' : '');
+  }
+  function ouvrirFiche(id, mode){
+    var p = produit(id); if (!p) return;
+    if (!$("panier").hidden) fermerPanier();
+    fermerMenu();
+    ficheId = id; photoActive = 0; rendreFiche();
+    $("fiche").hidden = false; document.body.style.overflow = "hidden"; $("fiche-boite").scrollTop = 0;
+    try {
+      var h = "#bijou-" + encodeURIComponent(id);
+      if (mode === "push") { history.pushState({fiche: id}, "", h); fichePoussee = true; }
+      else if (mode === "replace") history.replaceState({fiche: id}, "", h);
+    } catch (e) {}
+    var f = $("fiche-boite").querySelector(".fiche-fermer"); if (f) try { f.focus({preventScroll: true}); } catch (e) {}
+    if (window.goatcounter && window.goatcounter.count) try { window.goatcounter.count({path: "bijou-" + id, title: p.nom, event: true}); } catch (e) {}
+  }
+  function fermerFiche(depuisHistorique){
+    if ($("fiche").hidden) return;
+    $("fiche").hidden = true; document.body.style.overflow = ""; ficheId = null;
+    if (!depuisHistorique && /^#bijou-/.test(location.hash)) {
+      if (fichePoussee) { fichePoussee = false; history.back(); }
+      else { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {} }
+    }
+    if (depuisHistorique) fichePoussee = false;
+  }
+  window.addEventListener("popstate", function(){
+    var m = /^#bijou-(.+)$/.exec(location.hash);
+    if (m) ouvrirFiche(decodeURIComponent(m[1]), null); else fermerFiche(true);
+  });
+  function partager(id){
+    var p = produit(id); if (!p) return;
+    var url = location.href.split("#")[0] + "#bijou-" + encodeURIComponent(id);
+    var texte = p.nom + " – " + gnf(p.prix) + (etat.nom ? " chez " + etat.nom : "");
+    if (navigator.share) { navigator.share({title: p.nom, text: texte, url: url}).catch(function(){}); return; }
+    window.open("https://wa.me/?text=" + encodeURIComponent(texte + "\n" + url), "_blank", "noopener");
+  }
+
+  /* ---------- Avis, guide des tailles, FAQ ---------- */
+  function rendreAvis(){
+    var L = etat.avis.filter(function(a){ return a && a.texte; });
+    $("avis").hidden = !L.length; if (!L.length) return;
+    $("nb-avis").textContent = L.length + " avis";
+    $("liste-avis-vitrine").innerHTML = L.map(function(a){
+      var n = Math.min(5, Math.max(1, Number(a.note) || 5));
+      return '<figure class="carte-avis"><div class="etoiles" role="img" aria-label="' + n + ' étoiles sur 5">' + "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n) + '</div>' +
+        '<blockquote>« ' + esc(a.texte) + ' »</blockquote><cite>— ' + esc(a.nom || "Cliente") + (a.ville ? ", " + esc(a.ville) : "") + '</cite></figure>';
+    }).join("");
+  }
+  function faqTexte(L){ return (L || []).map(function(f){ return f.q + "\n" + f.r; }).join("\n\n"); }
+  function lireFaq(t){
+    return String(t || "").split(/\n\s*\n/).map(function(bloc){ var l = bloc.trim().split("\n"); return {q: (l.shift() || "").trim(), r: l.join("\n").trim()}; })
+      .filter(function(f){ return f.q && f.r; });
+  }
+  function rendreFaq(){
+    $("faq").innerHTML = etat.faq.length ? etat.faq.map(function(f){ return '<details><summary>' + esc(f.q) + '</summary><p>' + esc(f.r) + '</p></details>'; }).join("")
+      : '<p class="details">Écrivez-nous sur WhatsApp pour toute question.</p>';
+    if (!$("tailles").innerHTML) {
+      var t = []; for (var x = 48; x <= 62; x += 2) t.push('<tr><td>' + x + '</td><td>' + x + ' mm</td><td>' + (x / Math.PI).toFixed(1).replace(".", ",") + ' mm</td></tr>');
+      $("tailles").innerHTML = t.join("");
+    }
+  }
+
+  /* ---------- Application installable et statistiques (site public) ---------- */
+  var estSitePublic = !!document.querySelector('link[rel="manifest"]'), invite = null;
+  window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); invite = e; });
+  function estIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent); }
+  function installable(){
+    if (!estSitePublic) return false;
+    if (window.matchMedia && matchMedia("(display-mode: standalone)").matches) return false;
+    return !!invite || estIOS();
+  }
+  function installer(){
+    fermerMenu();
+    if (invite) { var i = invite; invite = null; i.prompt(); return; }
+    toast("Sur iPhone : touchez Partager, puis « Sur l'écran d'accueil ».");
+  }
+  if (estSitePublic && "serviceWorker" in navigator) window.addEventListener("load", function(){ navigator.serviceWorker.register("/sw.js").catch(function(){}); });
+  if (estSitePublic && /^[a-z0-9-]+$/.test(String(etat.goatcounter || ""))) {
+    var sc = document.createElement("script"); sc.async = true; sc.src = "https://gc.zgo.at/count.js";
+    sc.setAttribute("data-goatcounter", "https://" + etat.goatcounter + ".goatcounter.com/count");
+    document.head.appendChild(sc);
+  }
+
+  /* ---------- Événements de la vitrine ---------- */
+  app.addEventListener("click", function(e){
+    if (e.target.closest('[data-r="ouvrir-menu"]')) return ouvrirMenu();
+    if (e.target.closest('[data-r="fermer-menu"]') || e.target.closest('[data-r="voile-menu"]')) return fermerMenu();
+    if (e.target.closest('[data-r="fermer-fiche"]') || e.target === $("fiche")) return fermerFiche();
+    if (e.target.closest('[data-r="installer"]')) return installer();
+    var mc = e.target.closest("[data-menu-cat]");
+    if (mc) { filtre = mc.getAttribute("data-menu-cat"); recherche = ""; $("recherche").value = ""; fermerMenu(); rendreGrille(true); allerA("bijoux"); return; }
+    var an = e.target.closest("[data-ancre]");
+    if (an) { e.preventDefault(); fermerFiche(); fermerMenu(); allerA(an.getAttribute("data-ancre")); return; }
+    var fv = e.target.closest("[data-fav]");
+    if (fv) { basculerFav(fv.getAttribute("data-fav")); return; }
+    var pa = e.target.closest("[data-partager]");
+    if (pa) { partager(pa.getAttribute("data-partager")); return; }
+    var fi = e.target.closest("[data-fiche]");
+    if (fi) { e.preventDefault(); ouvrirFiche(fi.getAttribute("data-fiche"), $("fiche").hidden ? "push" : "replace"); return; }
+    var ph = e.target.closest("[data-photo]");
+    if (ph) { photoActive = Number(ph.getAttribute("data-photo")) || 0; rendreFiche(); return; }
+    var im = e.target.closest('[data-r="fiche-image"]');
+    if (im && im.querySelector("img")) { positionZoom(im, e); im.classList.toggle("zoome"); return; }
+    if (e.target.closest("[data-effacer]")) { e.preventDefault(); recherche = ""; $("recherche").value = ""; filtre = "Tous"; rendreGrille(true); return; }
+  });
+  function positionZoom(im, e){
+    var r = im.getBoundingClientRect();
+    im.style.setProperty("--x", Math.round((e.clientX - r.left) / r.width * 100) + "%");
+    im.style.setProperty("--y", Math.round((e.clientY - r.top) / r.height * 100) + "%");
+  }
+  app.addEventListener("pointermove", function(e){ var im = e.target.closest && e.target.closest(".fiche-image.zoome"); if (im) positionZoom(im, e); });
+  app.addEventListener("input", function(e){ if (e.target === $("recherche")) { recherche = e.target.value; rendreGrille(true); } });
+  app.addEventListener("change", function(e){ if (e.target === $("tri")) { tri = e.target.value; rendreGrille(true); } });
+  app.addEventListener("submit", function(e){
+    if (e.target.getAttribute("data-r") !== "form-recherche-menu") return;
+    e.preventDefault();
+    recherche = e.target.q.value.trim(); $("recherche").value = recherche; filtre = "Tous";
+    fermerMenu(); rendreGrille(true); allerA("bijoux");
+  });
+
+  /* ---------- Club Kadya ---------- */
+  var erreurClub = "";
+  function rendreClub(){
+    var on = clubOn(), pct = pctClub();
+    $("club").hidden = !on; $("annonce").hidden = !on;
+    if (!on) return;
+    $("annonce-lien").textContent = "Club Kadya : −" + pct + " % sur votre 1re commande · S'inscrire";
+    $("club-titre").textContent = "−" + pct + " % sur votre première commande";
+    $("club-grille").setAttribute("data-pct", "−" + pct + "%");
+    var inscrit = lireClub();
+    if (inscrit) {
+      $("club-carte").innerHTML = '<div class="club-merci"><p class="bienvenue">Bienvenue au Club' + (inscrit.prenom ? ", " + esc(inscrit.prenom) : "") + ' !</p>' +
+        '<p>Votre code de bienvenue :</p>' +
+        '<div class="code-promo"><span class="numero">' + esc(etat.clubCode) + '</span><button class="copier" type="button" data-r="copier-code">Copier</button></div>' +
+        '<small class="indice">Saisissez-le au moment de commander : −' + pct + ' % sur votre première commande.</small>' +
+        '<a class="btn-principal" href="#bijoux">Choisir mes bijoux</a></div>';
+      return;
+    }
+    $("club-carte").innerHTML = '<form data-r="form-club" novalidate>' +
+      '<div class="champ"><label for="club-prenom">Prénom</label><input id="club-prenom" name="prenom" autocomplete="given-name"></div>' +
+      '<div class="champ"><label for="club-email">Adresse e-mail</label><input id="club-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.com"></div>' +
+      '<label class="choix"><input type="checkbox" name="accord"><span>J\'accepte de recevoir les offres et nouveautés de ' + esc(etat.nom || "la boutique") + ' par e-mail. Désinscription possible à tout moment.</span></label>' +
+      (erreurClub ? '<p class="erreur" role="alert">' + esc(erreurClub) + '</p>' : '') +
+      '<button class="btn-principal" type="submit">Recevoir mon code −' + pct + ' %</button></form>';
+  }
+  function inscrireClub(f){
+    var prenom = f.prenom.value.trim(), email = f.email.value.trim();
+    var err = [];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) err.push("une adresse e-mail valide");
+    if (!f.accord.checked) err.push("votre accord pour recevoir les offres");
+    if (err.length) { erreurClub = "Il manque " + err.join(" et ") + "."; rendreClub(); $("form-club").email.value = email; $("form-club").prenom.value = prenom; return; }
+    erreurClub = "";
+    var url = String(etat.clubBrevo || "").trim();
+    if (/^https:\/\//i.test(url) && window.fetch) {
+      try {
+        var fd = new FormData();
+        fd.append("EMAIL", email); fd.append("PRENOM", prenom); fd.append("FIRSTNAME", prenom);
+        fd.append("email_address_check", ""); fd.append("locale", "fr");
+        fetch(url, {method: "POST", mode: "no-cors", body: fd}).catch(function(){});
+      } catch (e) {}
+    }
+    try { localStorage.setItem(CLE_CLUB, JSON.stringify({prenom: prenom, email: email})); } catch (e) {}
+    clubMemoire = {prenom: prenom, email: email};
+    rendreClub();
+    toast("Bienvenue au Club ! Votre code : " + etat.clubCode);
   }
 
   /* ---------- Panier ---------- */
@@ -662,11 +1271,20 @@ html{scroll-behavior:smooth}
     toast("Ajouté au panier : " + produit(id).nom);
   }
 
+  function seuilOfferte(){ return Number(chiffres(etat.livraisonOfferte)) || 0; }
+  function offerteAtteinte(){ var s = seuilOfferte(); return s > 0 && sousTotal() >= s; }
+  function jaugeOfferte(){
+    var s = seuilOfferte(), L = etat.livraison || {};
+    if (!s || !(L.zone1 || L.zone2)) return "";
+    var st = sousTotal(), reste = s - st, pct = Math.min(100, Math.round(st / s * 100));
+    return '<div class="offerte' + (reste <= 0 ? ' atteinte' : '') + '"><span>' + (reste > 0 ? 'Plus que <strong>' + gnf(reste) + '</strong> pour la livraison offerte' : '✓ Livraison offerte sur cette commande') + '</span><div class="jauge"><i style="width:' + pct + '%"></i></div></div>';
+  }
   function modesLivraison(){
     var L = etat.livraison || {}, m = [];
     if (L.retrait !== false) m.push({id: "retrait", nom: "Retrait en boutique", frais: 0, aConfirmer: false});
-    if (L.zone1) m.push({id: "zone1", nom: "Livraison : " + L.zone1, frais: Number(chiffres(L.frais1)) || 0, aConfirmer: !chiffres(L.frais1)});
-    if (L.zone2) m.push({id: "zone2", nom: "Livraison : " + L.zone2, frais: Number(chiffres(L.frais2)) || 0, aConfirmer: !chiffres(L.frais2)});
+    var off = offerteAtteinte();
+    if (L.zone1) m.push(off ? {id: "zone1", nom: "Livraison : " + L.zone1, frais: 0, aConfirmer: false, offerte: true} : {id: "zone1", nom: "Livraison : " + L.zone1, frais: Number(chiffres(L.frais1)) || 0, aConfirmer: !chiffres(L.frais1)});
+    if (L.zone2) m.push(off ? {id: "zone2", nom: "Livraison : " + L.zone2, frais: 0, aConfirmer: false, offerte: true} : {id: "zone2", nom: "Livraison : " + L.zone2, frais: Number(chiffres(L.frais2)) || 0, aConfirmer: !chiffres(L.frais2)});
     if (!m.length) m.push({id: "retrait", nom: "Retrait en boutique", frais: 0, aConfirmer: false});
     return m;
   }
@@ -696,7 +1314,7 @@ html{scroll-behavior:smooth}
         return '<div class="article"><div class="mini">' + visuel(a.p) + '</div><div><strong>' + esc(a.p.nom) + '</strong><span>' + gnf(a.p.prix) + '</span><br><button class="retirer" type="button" data-p="retirer" data-id="' + esc(a.p.id) + '">Retirer</button></div>' +
           '<div class="quantite"><button type="button" data-p="moins" data-id="' + esc(a.p.id) + '" aria-label="Diminuer la quantité">−</button><output>' + a.q + '</output><button type="button" data-p="plus" data-id="' + esc(a.p.id) + '" aria-label="Augmenter la quantité">+</button></div></div>';
       }).join("");
-      pied.innerHTML = '<div class="ligne-total grand"><span>Sous-total</span><span>' + gnf(sousTotal()) + '</span></div>' +
+      pied.innerHTML = jaugeOfferte() + '<div class="ligne-total grand"><span>Sous-total</span><span>' + gnf(sousTotal()) + '</span></div>' +
         '<small style="color:var(--muted)">Livraison et paiement à choisir à l\'étape suivante.</small>' +
         '<button class="btn-principal" type="button" data-p="commander">Commander</button>' +
         '<button class="btn-second" type="button" data-p="continuer">Continuer mes achats</button>';
@@ -711,17 +1329,19 @@ html{scroll-behavior:smooth}
         '<div class="champ"><label for="c-tel">Votre téléphone</label><input id="c-tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="+224 6XX XX XX XX" value="' + esc(c.tel || "") + '"></div>' +
         '<fieldset><legend>Livraison</legend>' + liv.map(function(m){
           return '<label class="choix"><input type="radio" name="livraison" value="' + m.id + '"' + (m.id === choixLiv ? ' checked' : '') + '><span>' + esc(m.nom) +
-            '<small>' + (m.id === "retrait" ? "Gratuit" : m.aConfirmer ? "Frais confirmés sur WhatsApp" : gnf(m.frais)) + '</small></span></label>';
+            '<small>' + (m.id === "retrait" ? "Gratuit" : m.offerte ? "Livraison offerte" : m.aConfirmer ? "Frais confirmés sur WhatsApp" : gnf(m.frais)) + '</small></span></label>';
         }).join("") + '</fieldset>' +
         '<div class="champ" data-r="bloc-adresse"><label for="c-adresse">Adresse de livraison</label><input id="c-adresse" name="adresse" autocomplete="street-address" placeholder="Quartier, ville, repère" value="' + esc(c.adresse || "") + '"></div>' +
         '<fieldset><legend>Paiement</legend>' + pay.map(function(m){
           return '<label class="choix"><input type="radio" name="paiement" value="' + m.id + '"' + (m.id === choixPay ? ' checked' : '') + '><span>' + esc(m.nom) + '</span></label>';
         }).join("") + '</fieldset>' +
+        (clubOn() ? '<div class="champ"><label for="c-code">Code promo (facultatif)</label><input id="c-code" name="code" autocapitalize="characters" autocomplete="off" placeholder="Ex. : ' + esc(etat.clubCode) + '" value="' + esc(c.code != null ? c.code : (lireClub() ? etat.clubCode : "")) + '"></div>' : '') +
         '<div class="champ"><label for="c-note">Précision (facultatif)</label><textarea id="c-note" name="note" rows="2" placeholder="Taille de bague, couleur, heure de livraison…">' + esc(c.note || "") + '</textarea></div>' +
         (erreursForm ? '<p class="erreur" role="alert">' + esc(erreursForm) + '</p>' : '') +
         '</form>';
       majBlocAdresse();
-      pied.innerHTML = totaux(choixLiv) +
+      var codeInit = c.code != null ? c.code : (clubOn() && lireClub() ? etat.clubCode : "");
+      pied.innerHTML = totaux(choixLiv, codeInit) +
         '<button class="btn-principal" type="button" data-p="valider">Valider la commande</button>' +
         '<button class="btn-second" type="button" data-p="retour">Retour au panier</button>';
       return;
@@ -730,7 +1350,8 @@ html{scroll-behavior:smooth}
     var m = commande, wa = waLien(m.message);
     corps.innerHTML = '<div class="recap"><strong>Commande ' + esc(m.ref) + '</strong>' +
       m.lignes.map(function(l){ return '<div class="ligne-total"><span>' + l.q + ' × ' + esc(l.nom) + '</span><span>' + gnf(l.total) + '</span></div>'; }).join("") +
-      '<div class="ligne-total"><span>' + esc(m.livNom) + '</span><span>' + (m.livAConfirmer ? "à confirmer" : gnf(m.frais)) + '</span></div>' +
+      (m.remise ? '<div class="ligne-total remise"><span>Club Kadya (−' + pctClub() + ' %)</span><span>− ' + gnf(m.remise) + '</span></div>' : '') +
+      '<div class="ligne-total"><span>' + esc(m.livNom) + '</span><span>' + (m.livOfferte ? "Offerte" : m.livAConfirmer ? "à confirmer" : gnf(m.frais)) + '</span></div>' +
       '<div class="ligne-total grand"><span>Total</span><span>' + gnf(m.total) + (m.livAConfirmer ? " + livraison" : "") + '</span></div>' +
       '<div class="details">Paiement : ' + esc(m.payNom) + '</div></div>' +
       '<div class="consigne">' + consignePaiement(m) + '</div>';
@@ -740,12 +1361,18 @@ html{scroll-behavior:smooth}
       '<button class="btn-second" type="button" data-p="vider">J\'ai envoyé ma commande, vider le panier</button>';
   }
 
-  function totaux(livId){
+  function totaux(livId, code){
     var m = modesLivraison().find(function(x){ return x.id === livId; }) || modesLivraison()[0];
-    var st = sousTotal();
+    var st = sousTotal(), r = remise(code), saisi = String(code || "").trim();
     return '<div class="ligne-total"><span>Sous-total</span><span>' + gnf(st) + '</span></div>' +
-      '<div class="ligne-total"><span>Livraison</span><span>' + (m.id === "retrait" ? "Gratuit" : m.aConfirmer ? "à confirmer" : gnf(m.frais)) + '</span></div>' +
-      '<div class="ligne-total grand"><span>Total</span><span>' + gnf(st + m.frais) + (m.aConfirmer ? " + livraison" : "") + '</span></div>';
+      (r ? '<div class="ligne-total remise"><span>Club Kadya (−' + pctClub() + ' %)</span><span>− ' + gnf(r) + '</span></div>' : '') +
+      (saisi && !r ? '<small class="indice">Ce code promo n\'est pas valide.</small>' : '') +
+      '<div class="ligne-total"><span>Livraison</span><span>' + (m.id === "retrait" ? "Gratuit" : m.offerte ? "Offerte" : m.aConfirmer ? "à confirmer" : gnf(m.frais)) + '</span></div>' +
+      '<div class="ligne-total grand"><span>Total</span><span>' + gnf(st - r + m.frais) + (m.aConfirmer ? " + livraison" : "") + '</span></div>';
+  }
+  function majTotaux(){
+    lireForm();
+    $("panier-pied").innerHTML = totaux(commande.livraison, commande.code) + '<button class="btn-principal" type="button" data-p="valider">Valider la commande</button><button class="btn-second" type="button" data-p="retour">Retour au panier</button>';
   }
 
   function consignePaiement(m){
@@ -770,7 +1397,7 @@ html{scroll-behavior:smooth}
   function lireForm(){
     var f = $("form-commande"), g = function(n){ var el = f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ""; };
     var r = function(n){ var el = f.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : ""; };
-    commande = {nom: g("nom"), tel: g("tel"), adresse: g("adresse"), note: g("note"), livraison: r("livraison"), paiement: r("paiement")};
+    commande = {nom: g("nom"), tel: g("tel"), adresse: g("adresse"), note: g("note"), code: g("code"), livraison: r("livraison"), paiement: r("paiement")};
   }
 
   function valider(){
@@ -780,30 +1407,32 @@ html{scroll-behavior:smooth}
     if (chiffres(c.tel).length < 8) err.push("un numéro de téléphone complet");
     if (c.livraison !== "retrait" && !c.adresse) err.push("l'adresse de livraison");
     if (err.length) { erreursForm = "Il manque " + err.join(", ") + "."; rendrePanier(); return; }
+    if (c.code && !codeValide(c.code)) { erreursForm = "Ce code promo n'est pas valide. Corrigez-le ou laissez le champ vide."; rendrePanier(); return; }
     erreursForm = "";
     var liv = modesLivraison().find(function(x){ return x.id === c.livraison; }) || modesLivraison()[0];
     var pay = modesPaiement().find(function(x){ return x.id === c.paiement; }) || modesPaiement()[0];
     var d = new Date(), pad = function(n){ return String(n).padStart(2, "0"); };
     var ref = "KJ-" + pad(d.getDate()) + pad(d.getMonth() + 1) + "-" + pad(d.getHours()) + pad(d.getMinutes());
     var lignes = articles().map(function(a){ return {nom: a.p.nom, q: a.q, total: (Number(a.p.prix) || 0) * a.q}; });
-    var st = sousTotal(), total = st + liv.frais;
+    var st = sousTotal(), rem = remise(c.code), total = st - rem + liv.frais;
     var msg = "Bonjour " + (etat.nom || "") + ", voici ma commande " + ref + " :\n" +
       lignes.map(function(l){ return "• " + l.q + " × " + l.nom + " — " + gnf(l.total); }).join("\n") +
       "\nSous-total : " + gnf(st) +
-      "\n" + liv.nom + " : " + (liv.id === "retrait" ? "gratuit" : liv.aConfirmer ? "frais à confirmer" : gnf(liv.frais)) +
+      (rem ? "\nCode Club Kadya " + String(etat.clubCode).toUpperCase() + " (−" + pctClub() + " %, première commande) : − " + gnf(rem) : "") +
+      "\n" + liv.nom + " : " + (liv.id === "retrait" ? "gratuit" : liv.offerte ? "offerte" : liv.aConfirmer ? "frais à confirmer" : gnf(liv.frais)) +
       "\nTotal : " + gnf(total) + (liv.aConfirmer ? " + livraison" : "") +
       "\nPaiement : " + pay.nom +
       "\n\nNom : " + c.nom + "\nTéléphone : " + c.tel +
       (liv.id !== "retrait" ? "\nAdresse : " + c.adresse : "") +
       (c.note ? "\nPrécision : " + c.note : "") +
       "\n\nMerci de me confirmer la disponibilité.";
-    commande = Object.assign({}, c, {ref: ref, lignes: lignes, frais: liv.frais, livNom: liv.nom, livAConfirmer: liv.aConfirmer, payId: pay.id, payNom: pay.nom, total: total, message: msg});
+    commande = Object.assign({}, c, {ref: ref, lignes: lignes, frais: liv.frais, livNom: liv.nom, livAConfirmer: liv.aConfirmer, livOfferte: !!liv.offerte, payId: pay.id, payNom: pay.nom, remise: rem, total: total, message: msg});
     etape = "fin"; rendrePanier();
   }
 
   app.addEventListener("click", function(e){
     var b = e.target.closest(".filtre");
-    if (b) { filtre = b.getAttribute("data-cat"); rendreVitrine(); return; }
+    if (b) { filtre = b.getAttribute("data-cat"); rendreGrille(true); return; }
     var a = e.target.closest("[data-ajouter]");
     if (a) { ajouter(a.getAttribute("data-ajouter")); confirmerBouton(a); return; }
     if (e.target.closest('[data-r="ouvrir-panier"]')) return ouvrirPanier();
@@ -823,9 +1452,24 @@ html{scroll-behavior:smooth}
     sauverPanier(); majCompteur(); rendrePanier();
   });
   app.addEventListener("change", function(e){
-    if (e.target.name === "livraison") { majBlocAdresse(); lireForm(); var pied = $("panier-pied"); pied.innerHTML = totaux(commande.livraison) + '<button class="btn-principal" type="button" data-p="valider">Valider la commande</button><button class="btn-second" type="button" data-p="retour">Retour au panier</button>'; }
+    if (e.target.name === "livraison") { majBlocAdresse(); majTotaux(); }
   });
-  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !$("panier").hidden) fermerPanier(); });
+  app.addEventListener("submit", function(e){
+    if (e.target.getAttribute("data-r") === "form-club") { e.preventDefault(); inscrireClub(e.target); }
+    else if (e.target.getAttribute("data-r") === "form-commande") { e.preventDefault(); }
+  });
+  app.addEventListener("click", function(e){
+    var b = e.target.closest('[data-r="copier-code"]'); if (!b) return;
+    var fait = function(){ b.textContent = "Copié ✓"; setTimeout(function(){ b.textContent = "Copier"; }, 1500); };
+    try { navigator.clipboard.writeText(etat.clubCode).then(fait, function(){ toast("Code : " + etat.clubCode); }); } catch (err) { toast("Code : " + etat.clubCode); }
+  });
+  app.addEventListener("input", function(e){ if (e.target.name === "code" && $("form-commande")) majTotaux(); });
+  document.addEventListener("keydown", function(e){
+    if (e.key !== "Escape") return;
+    if (!$("fiche").hidden) return fermerFiche();
+    if (!$("menu").hidden) return fermerMenu();
+    if (!$("panier").hidden) fermerPanier();
+  });
 
   /* ---------- Gestion ---------- */
   function copie(o){ return JSON.parse(JSON.stringify(o)); }
@@ -838,12 +1482,13 @@ html{scroll-behavior:smooth}
       if (k === "categories") v = cats(brouillon).join(", ");
       if (k === "atouts") v = liste(brouillon.atouts).join(", ");
       if (/^(zone|frais)[12]$/.test(k)) v = (brouillon.livraison || {})[k];
+      if (k === "faq") v = faqTexte(brouillon.faq);
       if (inp.type === "color") v = couleurValide(v) ? v : (k === "couleurOr" ? "#FFBE5C" : "#600B09");
       inp.value = v == null ? "" : v;
     });
     app.querySelectorAll("[data-c]").forEach(function(c){
       var k = c.getAttribute("data-c");
-      c.checked = k === "retrait" ? (brouillon.livraison || {}).retrait !== false : !!(brouillon.paiements || {})[k];
+      c.checked = k === "retrait" ? (brouillon.livraison || {}).retrait !== false : k === "club" ? brouillon.clubActif !== false : !!(brouillon.paiements || {})[k];
     });
     message(""); afficherOnglet(ongletActif); rendreGestion();
     $("gestion").hidden = false; document.body.style.overflow = "hidden";
@@ -873,6 +1518,10 @@ html{scroll-behavior:smooth}
         '<button class="btn" type="button" data-act="modifier" data-id="' + p.id + '">Modifier</button>' +
         '<button class="btn danger" type="button" data-act="supprimer" data-id="' + p.id + '">Supprimer</button></div></div>';
     }).join("") : '<p class="vide">Aucun bijou. Appuyez sur « Ajouter un bijou » pour commencer.</p>';
+    $("liste-avis").innerHTML = (brouillon.avis || []).map(function(a, i){
+      return '<div class="ligne-avis"><div><strong>' + esc(a.nom) + (a.ville ? ', ' + esc(a.ville) : '') + ' · ' + "★★★★★".slice(0, Number(a.note) || 5) + '</strong><p>' + esc(a.texte) + '</p></div>' +
+        '<button class="btn danger" type="button" data-act="suppr-avis" data-i="' + i + '">Supprimer</button></div>';
+    }).join("") || '<p class="details" style="margin:0">Aucun avis pour le moment.</p>';
     rendreEditeur();
   }
 
@@ -887,10 +1536,14 @@ html{scroll-behavior:smooth}
       '<div class="champ"><label for="e-metal">Matière</label><input id="e-metal" data-e="metal" value="' + esc(p.metal) + '" placeholder="Ex. : Acier inoxydable doré"></div>' +
       '<div class="champ"><label for="e-taille">Taille ou longueur (facultatif)</label><input id="e-taille" data-e="taille" value="' + esc(p.taille) + '" placeholder="Ex. : 45 cm, taille réglable"></div>' +
       '<div class="champ"><label for="e-prix">Prix (GNF)</label><input id="e-prix" data-e="prix" inputmode="numeric" value="' + esc(p.prix || "") + '"></div>' +
+      '<div class="champ"><label for="e-prix-avant">Ancien prix (pour une promo)</label><input id="e-prix-avant" data-e="prixAvant" inputmode="numeric" value="' + esc(p.prixAvant || "") + '" placeholder="Vide = pas de promo"><small>S\'il est plus élevé que le prix, il s\'affiche barré avec le badge −%.</small></div>' +
+      '<div class="champ"><label for="e-badge">Badge</label><select id="e-badge" data-e="badge"><option value="">Aucun</option><option value="nouveau"' + (p.badge === "nouveau" ? ' selected' : '') + '>Nouveauté</option></select></div>' +
       '<div class="champ"><label for="e-stock">Stock</label><select id="e-stock" data-e="stock">' + Object.keys(STOCKS).map(function(k){ return '<option value="' + k + '"' + (p.stock === k ? ' selected' : '') + '>' + STOCKS[k] + '</option>'; }).join("") + '</select></div>' +
       '<div class="champ large"><label for="e-desc">Description (facultatif)</label><input id="e-desc" data-e="description" value="' + esc(p.description) + '" maxlength="160"></div>' +
       '<div class="champ large"><label for="e-photo">Photo du bijou</label><div class="ligne-logo"><div style="width:64px;height:64px;border-radius:10px;overflow:hidden;background:var(--or-doux);display:grid;place-items:center">' + (p.photo ? '<img alt="" src="' + esc(p.photo) + '" style="width:100%;height:100%;object-fit:cover">' : '') + '</div>' +
       '<input id="e-photo" type="file" accept="image/*" data-r="fichier-photo"' + (assets ? '' : ' disabled') + '>' + (p.photo ? '<button class="btn" type="button" data-act="retirer-photo">Retirer la photo</button>' : '') + '</div><small>Choisir une nouvelle photo remplace l\'ancienne.</small></div>' +
+      '<div class="champ large"><label for="e-photos">Photos supplémentaires (jusqu\'à 5)</label><div class="photos-sup">' + (p.photos || []).map(function(u, i){ return '<div class="vignette"><img alt="" src="' + esc(u) + '"><button type="button" data-act="retirer-photo-sup" data-i="' + i + '" aria-label="Retirer cette photo">✕</button></div>'; }).join("") +
+      '<input id="e-photos" type="file" accept="image/*" multiple data-r="fichier-photos"' + (assets && (p.photos || []).length < 5 ? '' : ' disabled') + '></div><small>Autres angles, bijou porté… Elles s\'affichent dans la fiche du bijou.</small></div>' +
       '</div><div class="actions"><button class="btn principal" type="button" data-act="valider">Valider ce bijou</button><button class="btn" type="button" data-act="annuler">Annuler</button></div>' +
       '<p class="details" style="margin:0">« Valider » met à jour la liste ; pensez ensuite à « Enregistrer et publier ».</p></div>';
   }
@@ -898,7 +1551,7 @@ html{scroll-behavior:smooth}
   function lireEditeur(){
     $("zone-editeur").querySelectorAll("[data-e]").forEach(function(i){
       var k = i.getAttribute("data-e"), v = i.value;
-      enEdition[k] = k === "prix" ? (Number(chiffres(v)) || 0) : v.trim();
+      enEdition[k] = k === "prix" ? (Number(chiffres(v)) || 0) : k === "prixAvant" ? (Number(chiffres(v)) || "") : v.trim();
     });
   }
   function nouvelId(){ return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -915,7 +1568,17 @@ html{scroll-behavior:smooth}
     if (ong) return afficherOnglet(ong);
     if (r === "retirer-logo") { brouillon.logo = ""; return rendreGestion(); }
     if (r === "retirer-accueil") { brouillon.photoAccueil = ""; return rendreGestion(); }
-    if (r === "ajouter") { enEdition = {id: nouvelId(), nom: "", categorie: cats(brouillon)[0], metal: "Acier inoxydable", taille: "", prix: 0, description: "", photo: "", stock: "en-stock", nouveau: true}; return rendreEditeur(); }
+    if (r === "ajouter") { enEdition = {id: nouvelId(), nom: "", categorie: cats(brouillon)[0], metal: "Acier inoxydable", taille: "", prix: 0, prixAvant: "", badge: "", description: "", photo: "", photos: [], stock: "en-stock", nouveau: true}; return rendreEditeur(); }
+    if (act === "ajouter-avis") {
+      var av = {}; app.querySelectorAll("[data-a]").forEach(function(i){ av[i.getAttribute("data-a")] = i.value.trim(); });
+      if (!av.nom || !av.texte) { message("Indiquez le prénom de la cliente et son avis.", true); return; }
+      av.note = Number(av.note) || 5;
+      brouillon.avis = (brouillon.avis || []).concat([av]);
+      app.querySelectorAll("[data-a]").forEach(function(i){ if (i.tagName !== "SELECT") i.value = ""; });
+      message("Avis ajouté. Pensez à « Enregistrer et publier ».");
+      return rendreGestion();
+    }
+    if (act === "suppr-avis") { brouillon.avis.splice(Number(t.getAttribute("data-i")), 1); return rendreGestion(); }
     if (r === "vider-exemples") { brouillon.produits = brouillon.produits.filter(function(p){ return !p.exemple; }); return rendreGestion(); }
     var id = t.getAttribute("data-id");
     if (act === "modifier") { enEdition = copie(brouillon.produits.find(function(p){ return p.id === id; })); rendreEditeur(); $("zone-editeur").scrollIntoView({block: "start"}); return; }
@@ -929,6 +1592,7 @@ html{scroll-behavior:smooth}
     if (act === "oui-suppr") { brouillon.produits = brouillon.produits.filter(function(p){ return p.id !== id; }); enSuppression = null; return rendreGestion(); }
     if (act === "annuler") { enEdition = null; return rendreEditeur(); }
     if (act === "retirer-photo") { lireEditeur(); enEdition.photo = ""; return rendreEditeur(); }
+    if (act === "retirer-photo-sup") { lireEditeur(); enEdition.photos.splice(Number(t.getAttribute("data-i")), 1); return rendreEditeur(); }
     if (act === "valider") {
       lireEditeur();
       if (!enEdition.nom) { message("Donnez un nom au bijou avant de le valider.", true); return; }
@@ -946,6 +1610,7 @@ html{scroll-behavior:smooth}
     var f = e.target.getAttribute && e.target.getAttribute("data-f");
     if (!f) return;
     if (f === "categories" || f === "atouts") { brouillon[f] = liste(e.target.value); return; }
+    if (f === "faq") { brouillon.faq = lireFaq(e.target.value); return; }
     if (/^(zone|frais)[12]$/.test(f)) { brouillon.livraison = brouillon.livraison || {}; brouillon.livraison[f] = e.target.value; return; }
     brouillon[f] = e.target.value;
     if (f === "nom") $("apercu-logo").innerHTML = blocLogo(brouillon.logo, brouillon.nom);
@@ -954,11 +1619,22 @@ html{scroll-behavior:smooth}
   app.addEventListener("change", async function(e){
     var c = e.target.getAttribute && e.target.getAttribute("data-c");
     if (c && brouillon) {
-      if (c === "retrait") { brouillon.livraison = brouillon.livraison || {}; brouillon.livraison.retrait = e.target.checked; }
+      if (c === "club") { brouillon.clubActif = e.target.checked; }
+      else if (c === "retrait") { brouillon.livraison = brouillon.livraison || {}; brouillon.livraison.retrait = e.target.checked; }
       else { brouillon.paiements = brouillon.paiements || {}; brouillon.paiements[c] = e.target.checked; }
       return;
     }
     var r = e.target.getAttribute && e.target.getAttribute("data-r");
+    if (r === "fichier-photos" && enEdition) {
+      var fs = Array.prototype.slice.call(e.target.files || []).filter(function(x){ return /^image\//.test(x.type) && x.size <= 20 * 1024 * 1024; });
+      lireEditeur(); enEdition.photos = enEdition.photos || [];
+      fs = fs.slice(0, Math.max(0, 5 - enEdition.photos.length));
+      if (!fs.length) return;
+      message("Envoi des photos…");
+      try { for (var k = 0; k < fs.length; k++) enEdition.photos.push(await envoyerImage(fs[k])); rendreEditeur(); message("Photos ajoutées. Pensez à « Enregistrer et publier »."); }
+      catch (err) { rendreEditeur(); message("Une photo n'a pas pu être envoyée. Réessayez avec une image plus légère.", true); }
+      return;
+    }
     if (r !== "fichier-logo" && r !== "fichier-photo" && r !== "fichier-accueil") return;
     var f = e.target.files && e.target.files[0]; if (!f) return;
     if (!/^image\//.test(f.type)) { message("Choisissez une image (JPG, PNG ou WebP).", true); return; }
@@ -975,11 +1651,16 @@ html{scroll-behavior:smooth}
 
   function nettoyer(b){
     var s = copie(b);
-    ["nom","slogan","accroche","presentation","whatsapp","adresse","horaires","tiktok","instagram","facebook","etiquetteAccueil","titreContact","texteContact","pays","numeroOrange","numeroMtn","titulaire"].forEach(function(k){ s[k] = String(s[k] || "").trim(); });
+    ["livraisonOfferte","goatcounter","entretien","nom","slogan","accroche","presentation","whatsapp","adresse","horaires","tiktok","instagram","facebook","etiquetteAccueil","titreContact","texteContact","pays","numeroOrange","numeroMtn","titulaire"].forEach(function(k){ s[k] = String(s[k] || "").trim(); });
     s.instagram = s.instagram.replace(/^@/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/.*$/, "");
     s.tiktok = s.tiktok.replace(/^@/, "").replace(/^https?:\/\/(www\.)?tiktok\.com\/@?/i, "").replace(/\/.*$/, "");
     if (s.facebook && !/^https?:\/\//i.test(s.facebook)) s.facebook = "https://" + s.facebook;
     s.atouts = liste(s.atouts); s.categories = liste(s.categories);
+    s.clubCode = String(s.clubCode || "").replace(/\s+/g, "").toUpperCase() || "BIENVENUE10";
+    s.clubReduction = String(Math.min(90, Math.max(0, Math.round(Number(String(s.clubReduction || "").replace(",", ".")) || 0))));
+    s.clubBrevo = String(s.clubBrevo || "").trim();
+    s.goatcounter = s.goatcounter.replace(/^https?:\/\//i, "").replace(/\.goatcounter\.com.*$/i, "").replace(/[^a-z0-9-]/gi, "").toLowerCase();
+    s.livraisonOfferte = chiffres(s.livraisonOfferte);
     return s;
   }
 
@@ -1012,6 +1693,7 @@ html{scroll-behavior:smooth}
   }
 
   rendreVitrine();
+  (function(){ var m = /^#bijou-(.+)$/.exec(location.hash); if (m) ouvrirFiche(decodeURIComponent(m[1]), null); })();
   var entete = app.querySelector(".entete");
   function ombreEntete(){ entete.classList.toggle("defile", window.scrollY > 8); }
   window.addEventListener("scroll", ombreEntete, {passive: true}); ombreEntete();

@@ -1,0 +1,16 @@
+{
+  "name": "Kadya Jewels",
+  "short_name": "Kadya Jewels",
+  "description": "Bijoux en acier inoxydable en Guinée",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EE",
+  "theme_color": "#600B09",
+  "icons": [
+    {"src": "/favicon.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
